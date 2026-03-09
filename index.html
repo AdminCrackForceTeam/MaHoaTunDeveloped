@@ -1,146 +1,120 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Shop Tun ĐẸP CHAIII </title>
+<title>Trang Quà Cho Em 💗</title>
 
 <style>
 
 body{
 margin:0;
-font-family:system-ui;
-background:linear-gradient(135deg,#ffd6e7,#ffc2db);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
+font-family:Arial;
+background:linear-gradient(135deg,#ff9ac9,#ff6fb3);
+text-align:center;
+color:white;
+overflow-x:hidden;
 }
 
-/* khung điện thoại /
+/* container */
 
-.phone{
-width:370px;
-height:720px;
-background:white;
-border-radius:40px;
-box-shadow:0 25px 60px rgba(0,0,0,0.3);
-overflow:auto;
+.container{
+max-width:420px;
+margin:auto;
 padding:20px;
-position:relative;
 }
 
-/ header /
+/* title */
 
-.header{
-text-align:center;
-font-size:22px;
-font-weight:bold;
-color:#ff2e88;
+h1{
+font-size:28px;
 }
 
-#money{
-text-align:center;
-margin-top:5px;
-font-size:18px;
-color:#ff2e88;
-font-weight:bold;
+/* heart */
+
+.heart{
+position:fixed;
+color:pink;
+font-size:20px;
+animation:fly 6s linear infinite;
 }
 
-/ section /
-
-.section{
-margin-top:25px;
+@keyframes fly{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-100vh)}
 }
 
-.title{
-text-align:center;
-color:#ff2e88;
-margin-bottom:12px;
-font-size:16px;
-}
-
-/ grid /
+/* grid */
 
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:18px;
-justify-items:center;
+gap:15px;
+margin-top:20px;
 }
 
 .grid10{
 display:grid;
 grid-template-columns:repeat(5,1fr);
-gap:12px;
-justify-items:center;
+gap:10px;
+margin-top:20px;
 }
 
-/ box /
+/* gift */
 
 .box{
-width:85px;
-height:85px;
-background:linear-gradient(145deg,#ff6fb3,#ff9ac9);
-border-radius:18px;
+height:80px;
+background:white;
+color:#ff4fa0;
+border-radius:15px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:34px;
+font-size:30px;
 cursor:pointer;
-transition:0.3s;
-box-shadow:0 8px 20px rgba(0,0,0,0.15);
+transition:0.2s;
 }
 
-.box:hover{
-transform:scale(1.15) rotate(5deg);
-background:linear-gradient(145deg,#ff8fc7,#ffb6da);
+.box:active{
+transform:scale(0.9);
 }
 
-.smallbox{
-width:60px;
+.small{
 height:60px;
-font-size:22px;
+font-size:20px;
 }
 
-/ popup /
+/* popup */
 
 .popup{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.25);
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
 display:none;
-text-align:center;
-width:250px;
+align-items:center;
+justify-content:center;
+}
+
+.card{
+background:white;
+color:#ff4fa0;
+padding:30px;
+border-radius:20px;
+width:80%;
+font-size:20px;
 }
 
 button{
-background:#ff4da6;
-border:none;
+margin-top:15px;
 padding:10px 20px;
-border-radius:12px;
+border:none;
+border-radius:10px;
+background:#ff4fa0;
 color:white;
-cursor:pointer;
-font-weight:bold;
-}
-
-/ hearts /
-
-.heart{
-position:absolute;
-font-size:20px;
-animation:fall 6s linear infinite;
-}
-
-@keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(100vh);}
+font-size:16px;
 }
 
 </style>
@@ -148,177 +122,133 @@ animation:fall 6s linear infinite;
 
 <body>
 
-<div class="phone">
+<div class="container">
 
-<div class="header">💖 Shop Quà Bí Mật</div>
-<div id="money">💰 0đ</div>
+<h1>💗 Quà Cho Em 💗</h1>
 
-<div class="section">
+<p>Mở thử 1 trong 6 hộp quà nhé</p>
 
-<div class="title">🎁 Hộp Quà Tình Yêu</div>
+<div class="grid" id="giftGrid"></div>
 
-<div class="grid">
+<h2 style="margin-top:40px">🎮 Mini Game Tiền</h2>
 
-<div class="box" onclick="gift(1)">🎁</div>
-<div class="box" onclick="gift(2)">🎁</div>
-<div class="box" onclick="gift(3)">🎁</div>
-<div class="box" onclick="gift(4)">🎁</div>
-<div class="box" onclick="gift(5)">🎁</div>
-<div class="box" onclick="gift(6)">🎁</div>
+<p>Chọn tối đa 3 hộp</p>
 
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="title">🎮 Mini Game Hộp Tiền</div>
-<div style="text-align:center;font-size:12px">Chọn tối đa 3 hộp</div>
-
-<br>
-
-<div class="grid10" id="game"></div>
+<div class="grid10" id="moneyGrid"></div>
 
 </div>
 
 <div class="popup" id="popup">
-
-<div id="popupText"></div>
-
-<br><br>
-
-<button onclick="closePopup()">Đóng</button>
-
-</div>
-
+<div class="card" id="popupText"></div>
 </div>
 
 <script>
 
-let money=0
-let choose=0
+/* heart effect */
 
-function update(){
-document.getElementById("money").innerHTML="💰 "+money+"đ"
+function createHeart(){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"%";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,500);
+
+/* gift game */
+
+let gifts=[
+"💌 Thư tình",
+"🍫 Chocolate",
+"💍 Nhẫn tình yêu",
+"🎵 Bài hát tặng em",
+"🌹 Hoa hồng",
+"💋 Một nụ hôn"
+];
+
+let giftGrid=document.getElementById("giftGrid");
+
+for(let i=0;i<6;i++){
+
+let box=document.createElement("div");
+box.className="box";
+box.innerHTML="🎁";
+
+box.onclick=function(){
+
+let gift=gifts[Math.floor(Math.random()*gifts.length)];
+
+showPopup("Em nhận được: "+gift+" 💗");
+
 }
 
-function popup(text){
-document.getElementById("popupText").innerHTML=text
-document.getElementById("popup").style.display="block"
+giftGrid.appendChild(box);
+
+}
+
+/* money game */
+
+let money=[
+10000,15000,20000,25000,30000,
+35000,40000,45000,50000,-10000
+];
+
+let moneyGrid=document.getElementById("moneyGrid");
+
+let picked=0;
+
+for(let i=0;i<10;i++){
+
+let box=document.createElement("div");
+box.className="box small";
+box.innerHTML="🎁";
+
+box.onclick=function(){
+
+if(picked>=3) return;
+
+picked++;
+
+let value=money[Math.floor(Math.random()*money.length)];
+
+if(value>0){
+
+showPopup("💰 Trúng "+value+" VND");
+
+}else{
+
+showPopup("💸 Mất 10k rồi 😝");
+
+}
+
+box.style.background="#ccc";
+
+}
+
+moneyGrid.appendChild(box);
+
+}
+
+/* popup */
+
+function showPopup(text){
+
+let popup=document.getElementById("popup");
+let content=document.getElementById("popupText");
+
+content.innerHTML=text+'<br><button onclick="closePopup()">OK</button>';
+
+popup.style.display="flex";
+
 }
 
 function closePopup(){
-document.getElementById("popup").style.display="none"
-}
 
-/ pháo hoa */
-
-function firework(){
-
-for(let i=0;i<20;i++){
-
-let star=document.createElement("div")
-
-star.innerHTML="✨"
-
-star.style.position="absolute"
-star.style.left=Math.random()*100+"%"
-star.style.top=Math.random()100+"%"
-star.style.fontSize="26px"
-
-document.body.appendChild(star)
-
-setTimeout(()=>star.remove(),1000)
+document.getElementById("popup").style.display="none";
 
 }
-
-}
-
-/ hộp quà /
-
-let gifts=[
-"🍫 Socola - Ngọt như tình yêu anh",
-"🌹 Hoa hồng - Em là bông hoa đẹp nhất",
-"🧸 Gấu bông - Ôm nó như ôm anh",
-"🍰 Bánh ngọt - Chúc em luôn ngọt ngào",
-"💍 Nhẫn - Một ngày anh sẽ đeo cho em",
-"💌 Thư tình - Anh yêu em rất nhiều"
-]
-
-function gift(n){
-
-popup(gifts[n-1])
-
-firework()
-
-}
-
-/ game tiền /
-
-let rewards=[10000,20000,30000,15000,25000,40000,12000,18000,22000,50000]
-
-rewards.sort(()=>Math.random()-0.5)
-
-let game=document.getElementById("game")
-
-rewards.forEach(value=>{
-
-let div=document.createElement("div")
-
-div.className="box smallbox"
-
-div.innerHTML="🎁"
-
-div.onclick=function(){
-
-if(choose>=3){
-popup("❌ Bạn chỉ được chọn 3 hộp")
-return
-}
-
-choose++
-
-money+=value
-
-update()
-
-div.innerHTML=value/1000+"K"
-
-div.style.background="#ff9ac9"
-
-popup("🎉 Bạn nhận "+value+"đ")
-
-firework()
-
-div.onclick=null
-
-}
-
-game.appendChild(div)
-
-})
-
-/ tim bay */
-
-function heart(){
-
-let h=document.createElement("div")
-
-h.className="heart"
-
-h.innerHTML="💗"
-
-h.style.left=Math.random()*100+"%"
-
-document.body.appendChild(h)
-
-setTimeout(()=>h.remove(),6000)
-
-}
-
-setInterval(heart,400)
-
-update()
 
 </script>
 
