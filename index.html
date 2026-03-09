@@ -160,12 +160,12 @@ setInterval(createHeart,500);
 /* gift game */
 
 let gifts=[
-"💌 Thư tình",
-"🍫 Chocolate",
-"💍 Nhẫn tình yêu",
-"🎵 Bài hát tặng em",
-"🌹 Hoa hồng",
-"💋 Một nụ hôn"
+" Một cây son",
+" Một chiếc vòng tay",
+" Tự do mua sắm [ 1 món duy nhất ]",
+" Một chiếc vòng tay Tự chọn",
+" Một bộ quần áo mới ",
+" 100 cái hun :))"
 ];
 
 let giftGrid=document.getElementById("giftGrid");
@@ -191,9 +191,23 @@ giftGrid.appendChild(box);
 /* money game */
 
 let money=[
-10000,15000,20000,25000,30000,
-35000,40000,45000,50000,-10000
+
+10000,
+15000,
+20000,
+25000,
+30000,
+35000,
+40000,
+45000,
+50000,
+-10000
+
 ];
+
+/* random vị trí tiền */
+
+money.sort(()=>Math.random()-0.5);
 
 let moneyGrid=document.getElementById("moneyGrid");
 
@@ -205,17 +219,23 @@ let box=document.createElement("div");
 box.className="box small";
 box.innerHTML="🎁";
 
+let value=money[i]; // mỗi hộp có tiền riêng
+
 box.onclick=function(){
 
-if(picked>=3) return;
+if(box.opened) return;
+
+if(picked>=3){
+showPopup("Bạn đã chọn đủ 3 hộp rồi 💗");
+return;
+}
 
 picked++;
-
-let value=money[Math.floor(Math.random()*money.length)];
+box.opened=true;
 
 if(value>0){
 
-showPopup("💰 Trúng "+value+" VND");
+showPopup("💰 Trúng "+value.toLocaleString()+" VND");
 
 }else{
 
@@ -223,9 +243,10 @@ showPopup("💸 Mất 10k rồi 😝");
 
 }
 
+box.innerHTML=value>0?"💰":"💸";
 box.style.background="#ccc";
 
-}
+};
 
 moneyGrid.appendChild(box);
 
