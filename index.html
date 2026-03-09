@@ -1,88 +1,326 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="vi">
 <head>
-
 <meta charset="UTF-8">
-<title>Device Activation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Shop Quà Bí Mật</title>
 
 <style>
 
 body{
-background:#0f0f0f;
-font-family:Arial;
-color:white;
+margin:0;
+font-family:system-ui;
+background:linear-gradient(135deg,#ffd6e7,#ffc2db);
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
+overflow:hidden;
 }
+
+/* khung điện thoại /
+
+.phone{
+width:370px;
+height:720px;
+background:white;
+border-radius:40px;
+box-shadow:0 25px 60px rgba(0,0,0,0.3);
+overflow:auto;
+padding:20px;
+position:relative;
+}
+
+/ header /
+
+.header{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#ff2e88;
+}
+
+#money{
+text-align:center;
+margin-top:5px;
+font-size:18px;
+color:#ff2e88;
+font-weight:bold;
+}
+
+/ section /
+
+.section{
+margin-top:25px;
+}
+
+.title{
+text-align:center;
+color:#ff2e88;
+margin-bottom:12px;
+font-size:16px;
+}
+
+/ grid /
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+justify-items:center;
+}
+
+.grid10{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
+justify-items:center;
+}
+
+/ box /
 
 .box{
+width:85px;
+height:85px;
+background:linear-gradient(145deg,#ff6fb3,#ff9ac9);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
 
-background:#1b1b1b;
-padding:40px;
-border-radius:10px;
+.box:hover{
+transform:scale(1.15) rotate(5deg);
+background:linear-gradient(145deg,#ff8fc7,#ffb6da);
+}
+
+.smallbox{
+width:60px;
+height:60px;
+font-size:22px;
+}
+
+/ popup /
+
+.popup{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+display:none;
 text-align:center;
-box-shadow:0 0 20px #00ff88;
-
-}
-
-h2{
-color:#00ff88;
-}
-
-input{
-
 width:250px;
-padding:10px;
-margin-top:15px;
-border:none;
-border-radius:5px;
-background:#2b2b2b;
-color:white;
-
 }
 
 button{
-
-margin-top:20px;
-padding:10px 25px;
+background:#ff4da6;
 border:none;
-border-radius:5px;
-background:#00ff88;
-color:black;
-font-weight:bold;
+padding:10px 20px;
+border-radius:12px;
+color:white;
 cursor:pointer;
-
+font-weight:bold;
 }
 
-button:hover{
+/ hearts /
 
-background:#00cc6a;
+.heart{
+position:absolute;
+font-size:20px;
+animation:fall 6s linear infinite;
+}
 
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(100vh);}
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="box">
+<div class="phone">
 
-<h2>ACTIVATE DEVICE</h2>
+<div class="header">💖 Shop Quà Bí Mật</div>
+<div id="money">💰 0đ</div>
 
-<form action="/submit" method="post">
+<div class="section">
 
-<input name="device" placeholder="Nhập Device ID" required>
+<div class="title">🎁 Hộp Quà Tình Yêu</div>
+
+<div class="grid">
+
+<div class="box" onclick="gift(1)">🎁</div>
+<div class="box" onclick="gift(2)">🎁</div>
+<div class="box" onclick="gift(3)">🎁</div>
+<div class="box" onclick="gift(4)">🎁</div>
+<div class="box" onclick="gift(5)">🎁</div>
+<div class="box" onclick="gift(6)">🎁</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<div class="title">🎮 Mini Game Hộp Tiền</div>
+<div style="text-align:center;font-size:12px">Chọn tối đa 3 hộp</div>
 
 <br>
 
-<button type="submit">Gửi</button>
-
-</form>
+<div class="grid10" id="game"></div>
 
 </div>
+
+<div class="popup" id="popup">
+
+<div id="popupText"></div>
+
+<br><br>
+
+<button onclick="closePopup()">Đóng</button>
+
+</div>
+
+</div>
+
+<script>
+
+let money=0
+let choose=0
+
+function update(){
+document.getElementById("money").innerHTML="💰 "+money+"đ"
+}
+
+function popup(text){
+document.getElementById("popupText").innerHTML=text
+document.getElementById("popup").style.display="block"
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none"
+}
+
+/ pháo hoa */
+
+function firework(){
+
+for(let i=0;i<20;i++){
+
+let star=document.createElement("div")
+
+star.innerHTML="✨"
+
+star.style.position="absolute"
+star.style.left=Math.random()*100+"%"
+star.style.top=Math.random()100+"%"
+star.style.fontSize="26px"
+
+document.body.appendChild(star)
+
+setTimeout(()=>star.remove(),1000)
+
+}
+
+}
+
+/ hộp quà /
+
+let gifts=[
+"🍫 Socola - Ngọt như tình yêu anh",
+"🌹 Hoa hồng - Em là bông hoa đẹp nhất",
+"🧸 Gấu bông - Ôm nó như ôm anh",
+"🍰 Bánh ngọt - Chúc em luôn ngọt ngào",
+"💍 Nhẫn - Một ngày anh sẽ đeo cho em",
+"💌 Thư tình - Anh yêu em rất nhiều"
+]
+
+function gift(n){
+
+popup(gifts[n-1])
+
+firework()
+
+}
+
+/ game tiền /
+
+let rewards=[10000,20000,30000,15000,25000,40000,12000,18000,22000,50000]
+
+rewards.sort(()=>Math.random()-0.5)
+
+let game=document.getElementById("game")
+
+rewards.forEach(value=>{
+
+let div=document.createElement("div")
+
+div.className="box smallbox"
+
+div.innerHTML="🎁"
+
+div.onclick=function(){
+
+if(choose>=3){
+popup("❌ Bạn chỉ được chọn 3 hộp")
+return
+}
+
+choose++
+
+money+=value
+
+update()
+
+div.innerHTML=value/1000+"K"
+
+div.style.background="#ff9ac9"
+
+popup("🎉 Bạn nhận "+value+"đ")
+
+firework()
+
+div.onclick=null
+
+}
+
+game.appendChild(div)
+
+})
+
+/ tim bay */
+
+function heart(){
+
+let h=document.createElement("div")
+
+h.className="heart"
+
+h.innerHTML="💗"
+
+h.style.left=Math.random()*100+"%"
+
+document.body.appendChild(h)
+
+setTimeout(()=>h.remove(),6000)
+
+}
+
+setInterval(heart,400)
+
+update()
+
+</script>
 
 </body>
 </html>
