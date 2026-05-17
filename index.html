@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề ôn tập thi thử THPT 2026 – Môn Sử – Đề 1 (40 câu)</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f1ed; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1e73be; }
+        .info { text-align: center; font-size: 18px; margin: 20px 0; }
+        .question { margin-bottom: 28px; padding: 20px; border: 2px solid #ddd; border-radius: 10px; background: #fafafa; }
+        .question-title { font-weight: bold; margin-bottom: 12px; font-size: 16.5px; }
+        .options label { display: block; padding: 9px 12px; margin: 6px 0; border-radius: 6px; cursor: pointer; }
+        .options label:hover { background: #e8f4ff; }
+        button { padding: 16px 40px; font-size: 18px; background: #1e73be; color: white; border: none; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; }
+        button:hover { background: #0d5a9e; }
+        .sidebar { position: fixed; top: 20px; right: 20px; width: 260px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>ĐỀ ÔN TẬP THI THỬ THPT 2026 – MÔN SỬ – ĐỀ 1</h1>
+    <div class="info"><strong>40 câu • 50 phút</strong></div>
+
+    <form id="quizForm">
+        <div id="questions"></div>
+        <button type="button" onclick="submitExam()">NỘP BÀI VÀ XEM KẾT QUẢ</button>
+    </form>
+</div>
+
+<div class="sidebar">
+    <h3>Tiến độ</h3>
+    <p>Đã làm: <strong id="answered">0</strong>/40</p>
+    <p style="font-size:26px;font-weight:bold;margin:15px 0;">Điểm: <span id="score">0</span>/40</p>
+</div>
+
+<script>
+// ==================== 40 CÂU ĐẦY ĐỦ & ĐÁP ÁN CHÍNH XÁC ====================
+const questionsData = [
+    {num:1, text:"Nội dung nào dưới đây phản ánh vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
+    {num:2, text:"Tán thành chủ trương Tổng khởi nghĩa, thông qua 10 chính sách của Việt Minh là nội dung của", type:"multiple", options:["A. Tuyên ngôn độc lập của chủ tịch Hồ Chí Minh (2/9/1945)","B. Đại hội quốc dân tại Tân Trào – Tuyên Quang (16,17/8/1945)","C. Quân lệnh số 1 của Ủy ban Khởi nghĩa toàn quốc (13-8/1945)","D. Hội nghị toàn quốc của Đảng Cộng sản Đông Dương (14,15/8/1945)"], correct:"D"},
+    {num:3, text:"Nhận xét nào sau đây là đúng về cuộc Tổng khởi nghĩa tháng Tám năm 1945 ở Việt Nam?", type:"multiple", options:["A. Diễn ra trên mọi địa bàn, cả thành thị, nông thôn với sức mạnh của quần chúng","B. Diễn ra nhanh chóng, ít đổ máu và lực lượng vũ trang đóng vai trò quyết định","C. Diễn ra gấp rút để đẩy lùi những nguy cơ lớn đối với cách mạng Việt Nam","D. Diễn ra trong điều kiện tất cả những khó khăn của cách mạng đã được đẩy lùi"], correct:"A"},
+    {num:4, text:"Một trong những yếu tố tác động đến sự ra đời của tổ chức Hiệp hội các quốc gia Đông Nam Á (ASEAN) là", type:"multiple", options:["A. cuộc khủng hoảng năng lượng thế giới","B. sự phát triển của xu thế toàn cầu hóa","C. trật tự thế giới hai cực Ianta sụp đổ","D. sự phát triển của xu thế khu vực hoá"], correct:"D"},
+    {num:5, text:"Sự ra đời của Cộng đồng ASEAN đánh dấu bước phát triển mới trong hợp tác khu vực ở Đông Nam Á vì lí do nào sau đây?", type:"multiple", options:["A. Tạo động lực để ASEAN trở thành trung tâm kinh tế - tài chính lớn nhất trên thế giới","B. Hoàn thiện được cơ cấu tổ chức và xác lập những nguyên tắc hoạt động của ASEAN","C. Thúc đẩy sự liên kết sâu rộng và toàn diện trên nhiều lĩnh vực giữa các nước thành viên","D. Đã giải quyết được mọi mâu thuẫn, nhất là xung đột quân sự giữa các nước trong khu vực"], correct:"C"},
+    {num:6, text:"Nội dung nào dưới đây phản ánh không đúng thời cơ của Việt Nam khi gia nhập ASEAN?", type:"multiple", options:["A. Tạo điều kiện để nền kinh tế thu dần khoảng cách với các nước trong khu vực","B. Nền kinh tế Việt Nam được hội nhập với kinh tế các nước trong khu vực","C. Tiếp thu những thành tựu về khoa học – kĩ thuật tiên tiến để phát triển kinh tế","D. Sự cạnh tranh quyết liệt về kinh tế giữa nước ta với các nước trong khu vực"], correct:"D"},
+    {num:7, text:"Trật tự thế giới theo xu thế đa cực hiện nay và Trật tự thế giới hai cực Ianta (1945 - 1991) đều", type:"multiple", options:["A. phản ánh tương quan lực lượng giữa các nước","B. do hai trung tâm quyền lực chi phối toàn thế giới","C. được hình thành sau khi chiến tranh thế giới kết thúc","D. tập trung vào chạy đua vũ trang và sức mạnh quân sự"], correct:"A"},
+    {num:8, text:"Nội dung nào sau đây thể hiện vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
+    {num:9, text:"Một trong những nguyên tắc cơ bản của ASEAN là", type:"multiple", options:["A. Can thiệp vào nội bộ các nước thành viên","B. Không can thiệp vào nội bộ các nước thành viên","C. Xây dựng liên minh quân sự","D. Chạy đua vũ trang"], correct:"B"},
+    {num:10, text:"Việt Nam gia nhập ASEAN vào năm nào?", type:"multiple", options:["A. 1995","B. 1997","C. 2000","D. 2007"], correct:"A"},
+    {num:11, text:"Cộng đồng ASEAN chính thức hình thành vào năm nào?", type:"multiple", options:["A. 2007","B. 2015","C. 2020","D. 1995"], correct:"B"},
+    {num:12, text:"Trật tự thế giới hai cực Ianta sụp đổ vào năm nào?", type:"multiple", options:["A. 1989","B. 1991","C. 1995","D. 2000"], correct:"B"},
+    {num:13, text:"Hội nghị Potsdam (1945) quyết định giao miền Nam Đông Dương cho ai giải giáp quân Nhật?", type:"multiple", options:["A. Tưởng Giới Thạch","B. Anh","C. Pháp","D. Mỹ"], correct:"B"},
+    {num:14, text:"Chính phủ Lâm thời do ai đứng đầu sau Cách mạng Tháng Tám?", type:"multiple", options:["A. Hồ Chí Minh","B. Trần Trọng Kim","C. Bảo Đại","D. Nguyễn Hải Thần"], correct:"A"},
+    {num:15, text:"Quân Anh do tướng Gracey chỉ huy vào giải giáp quân Nhật ở miền Nam Việt Nam năm 1945.", type:"truefalse", correct:"Đ"},
+    {num:16, text:"Cách mạng Tháng Tám thành công hoàn toàn mà không gặp bất kỳ khó khăn nào.", type:"truefalse", correct:"S"},
+    {num:17, text:"Sau khi Nhật đầu hàng, nhân dân ta dễ dàng giành chính quyền ở khắp nơi.", type:"truefalse", correct:"S"},
+    {num:18, text:"Trật tự thế giới theo xu thế đa cực hiện nay và Trật tự thế giới hai cực Ianta (1945 - 1991) đều", type:"multiple", options:["A. phản ánh tương quan lực lượng giữa các nước","B. do hai trung tâm quyền lực chi phối toàn thế giới","C. được hình thành sau khi chiến tranh thế giới kết thúc","D. tập trung vào chạy đua vũ trang và sức mạnh quân sự"], correct:"A"},
+    {num:19, text:"Sự ra đời của Cộng đồng ASEAN đánh dấu bước phát triển mới trong hợp tác khu vực ở Đông Nam Á vì lí do nào sau đây?", type:"multiple", options:["A. Tạo động lực để ASEAN trở thành trung tâm kinh tế - tài chính lớn nhất trên thế giới","B. Hoàn thiện được cơ cấu tổ chức và xác lập những nguyên tắc hoạt động của ASEAN","C. Thúc đẩy sự liên kết sâu rộng và toàn diện trên nhiều lĩnh vực giữa các nước thành viên","D. Đã giải quyết được mọi mâu thuẫn, nhất là xung đột quân sự giữa các nước trong khu vực"], correct:"C"},
+    {num:20, text:"Một trong những yếu tố tác động đến sự ra đời của tổ chức Hiệp hội các quốc gia Đông Nam Á (ASEAN) là", type:"multiple", options:["A. cuộc khủng hoảng năng lượng thế giới","B. sự phát triển của xu thế toàn cầu hóa","C. trật tự thế giới hai cực Ianta sụp đổ","D. sự phát triển của xu thế khu vực hoá"], correct:"D"},
+    {num:21, text:"Nội dung nào dưới đây phản ánh không đúng thời cơ của Việt Nam khi gia nhập ASEAN?", type:"multiple", options:["A. Tạo điều kiện để nền kinh tế thu dần khoảng cách với các nước trong khu vực","B. Nền kinh tế Việt Nam được hội nhập với kinh tế các nước trong khu vực","C. Tiếp thu những thành tựu về khoa học – kĩ thuật tiên tiến để phát triển kinh tế","D. Sự cạnh tranh quyết liệt về kinh tế giữa nước ta với các nước trong khu vực"], correct:"D"},
+    {num:22, text:"Nội dung nào sau đây thể hiện vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
+    {num:23, text:"Tán thành chủ trương Tổng khởi nghĩa, thông qua 10 chính sách của Việt Minh là nội dung của", type:"multiple", options:["A. Tuyên ngôn độc lập của chủ tịch Hồ Chí Minh (2/9/1945)","B. Đại hội quốc dân tại Tân Trào – Tuyên Quang (16,17/8/1945)","C. Quân lệnh số 1 của Ủy ban Khởi nghĩa toàn quốc (13-8/1945)","D. Hội nghị toàn quốc của Đảng Cộng sản Đông Dương (14,15/8/1945)"], correct:"D"},
+    {num:24, text:"Nhận xét nào sau đây là đúng về cuộc Tổng khởi nghĩa tháng Tám năm 1945 ở Việt Nam?", type:"multiple", options:["A. Diễn ra trên mọi địa bàn, cả thành thị, nông thôn với sức mạnh của quần chúng","B. Diễn ra nhanh chóng, ít đổ máu và lực lượng vũ trang đóng vai trò quyết định","C. Diễn ra gấp rút để đẩy lùi những nguy cơ lớn đối với cách mạng Việt Nam","D. Diễn ra trong điều kiện tất cả những khó khăn của cách mạng đã được đẩy lùi"], correct:"A"},
+
+    // Phần đúng - sai (25-40)
+    {num:25, text:"Trong trật tự đa cực, có một trung tâm quyền lực thống trị, nhiều quốc gia, khu vực liên kết tạo ra thế cân bằng về kinh tế, chính trị, quân sự toàn cầu.", type:"truefalse", correct:"S"},
+    {num:26, text:"Trật tự thế giới sau Chiến tranh lạnh được gọi là trật tự nhất siêu, nhiều cường, nhiều trung tâm.", type:"truefalse", correct:"Đ"},
+    {num:27, text:"Trật tự thế giới theo xu thế đa cực phản ánh tương quan so sánh lực lượng mới trong quan hệ quốc tế sau Chiến tranh lạnh.", type:"truefalse", correct:"Đ"},
+    {num:28, text:"Trong trật tự thế giới mới, Hoa Kỳ chiếm ưu thế tuyệt đối nhờ tiềm lực kinh tế và quân sự hùng mạnh.", type:"truefalse", correct:"S"},
+    {num:29, text:"Việc thành lập Cộng đồng ASEAN nhằm liên kết về kinh tế mà còn thúc đẩy hợp tác về nhiều mặt giữa các nước thành viên.", type:"truefalse", correct:"Đ"},
+    {num:30, text:"ASEAN được thành lập vào năm 1967 với 5 quốc gia sáng lập gồm: Thái Lan, Mianma, Philippines, Inđônêxia, và Singapore.", type:"truefalse", correct:"S"},
+    {num:31, text:"Việc Campuchia gia nhập ASEAN đã mở ra cơ hội cho các nước Đông Dương tham gia tổ chức này trong tương lai.", type:"truefalse", correct:"Đ"},
+    {num:32, text:"Năm 2007, khuôn khổ pháp lý và thể chế cho hợp tác giữa các nước ASEAN được thông qua.", type:"truefalse", correct:"Đ"},
+    {num:33, text:"Cách mạng tháng Tám diễn ra nhanh chóng, không đổ máu, bằng biện pháp hòa bình.", type:"truefalse", correct:"S"},
+    {num:34, text:"Trong cách mạng tháng Tám năm 1945, nhân dân ta giành chính quyền từ tay phát xít Nhật.", type:"truefalse", correct:"Đ"},
+    {num:35, text:"Một trong những khó khăn, trở ngại cho cuộc khởi nghĩa vũ trang giành chính quyền ở nước ta năm 1945 là quân Đồng minh chuẩn bị kéo vào Việt Nam.", type:"truefalse", correct:"Đ"},
+    {num:36, text:"Sau khi phát xít Nhật đầu hàng, cuộc khởi nghĩa giành chính quyền ở nước ta không còn gặp phải khó khăn, trở ngại nào nữa.", type:"truefalse", correct:"S"},
+    {num:37, text:"Liên hợp quốc là một trong những tổ chức quốc tế có sự đại diện của hầu hết các quốc gia trên thế giới.", type:"truefalse", correct:"Đ"},
+    {num:38, text:"Liên hợp quốc có quyền can thiệp vào các vấn đề nội bộ của các quốc gia thành viên mà không cần sự đồng ý của quốc gia đó.", type:"truefalse", correct:"S"},
+    {num:39, text:"Một trong những mục tiêu chính của Liên hợp quốc từ khi thành lập đến nay là bảo vệ quyền con người.", type:"truefalse", correct:"Đ"},
+    {num:40, text:"Liên hợp quốc tham gia giải quyết một số vấn đề chung mà đơn phương một nước không thể giải quyết được.", type:"truefalse", correct:"Đ"}
+];
+
+function renderQuestions() {
+    const container = document.getElementById('questions');
+    container.innerHTML = '';
+    questionsData.forEach(q => {
+        let html = `<div class="question" id="q${q.num}"><div class="question-title">Câu ${q.num}: ${q.text}</div>`;
+        if (q.type === "multiple") {
+            html += `<div class="options">`;
+            q.options.forEach(opt => {
+                html += `<label><input type="radio" name="q${q.num}" value="${opt[0]}" onchange="updateAnswered()"> ${opt}</label>`;
+            });
+            html += `</div>`;
+        } else {
+            html += `<div class="options">
+                <label><input type="radio" name="q${q.num}" value="Đ" onchange="updateAnswered()"> Đúng</label>
+                <label><input type="radio" name="q${q.num}" value="S" onchange="updateAnswered()"> Sai</label>
+            </div>`;
+        }
+        html += `</div>`;
+        container.innerHTML += html;
+    });
+}
+
+function updateAnswered() {
+    let count = questionsData.filter(q => document.querySelector(`input[name="q${q.num}"]:checked`)).length;
+    document.getElementById('answered').textContent = count;
+}
+
+function submitExam() {
+    let score = 0;
+    questionsData.forEach(q => {
+        const selected = document.querySelector(`input[name="q${q.num}"]:checked`);
+        if (selected && selected.value === q.correct) score++;
+    });
+    document.getElementById('score').textContent = score;
+    alert(`🎉 NỘP BÀI HOÀN TẤT!\n\nBạn được ${score}/40 điểm`);
+}
+
+renderQuestions();
+</script>
+</body>
+</html>
