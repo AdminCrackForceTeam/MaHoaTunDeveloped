@@ -30,9 +30,9 @@
 </div>
 
 <div class="sidebar">
-    <h3>Tiến độ</h3>
-    <p>Đã làm: <strong id="answered">0</strong>/40</p>
-    <p style="font-size:26px;font-weight:bold;margin:15px 0;">Điểm: <span id="score">0</span>/40</p>
+    <h3>Làm đi Tao Chấm Cho HIHI</h3>
+    <p>Đã làm đựttt: <strong id="answered">0</strong>/40</p>
+    <p style="font-size:26px;font-weight:bold;margin:15px 0;">Điểm của mài: <span id="score">0</span>/40</p>
 </div>
 
 <script>
@@ -116,7 +116,7 @@ function submitExam() {
         if (selected && selected.value === q.correct) score++;
     });
     document.getElementById('score').textContent = score;
-    alert(`🎉 NỘP BÀI HOÀN TẤT!\n\nBạn được ${score}/40 điểm`);
+    alert(`🎉 Em Bé Tun Đã Chấm!\n\nBạn được ${score}/40 điểm`);
 }
 
 renderQuestions();
