@@ -321,7 +321,7 @@
         <!-- TAB KÝ MOBILECONFIG -->
         <div id="panelSign">
             <div class="card">
-                <h2>📄 Tải lên file MobileConfig để ký</h2>
+                <h2>📄 Tải lên file MobileConfig để gắn tên TunDeveloped</h2>
                 <div class="row">
                     <div>
                         <label>📁 Chọn file .mobileconfig</label>
@@ -333,15 +333,15 @@
                     </div>
                 </div>
                 <div style="margin-top:12px;">
-                    <button class="btn btn-primary" id="btnSign" onclick="signUploadedFile()">
-                        🔏 Ký bởi TunDeveloped
+                    <button class="btn btn-primary" id="btnSign" onclick="attachTunDeveloped()">
+                        ✍️ Gắn thông tin TunDeveloped
                     </button>
                     <button class="btn btn-secondary btn-sm" id="btnDownloadSigned" onclick="downloadSignedFile()" disabled>
-                        📥 Tải file đã ký
+                        📥 Tải file đã gắn tên
                     </button>
                 </div>
                 <div class="signature-box hidden" id="signatureDisplay" style="margin-top:14px;">
-                    <strong>🔏 Chữ ký TunDeveloped</strong>
+                    <strong>✅ File hợp lệ – sẵn sàng tải về</strong>
                     <div id="signatureDetails" style="font-size:0.85em;"></div>
                 </div>
             </div>
@@ -413,14 +413,14 @@
             document.getElementById('tabEncrypt').classList.toggle('active', tab === 'encrypt');
         }
 
-        // ================== KÝ MOBILECONFIG ==================
-        let signedXmlContent = null;
-        let signedFileName = 'signed.mobileconfig';
+        // ================== GẮN TÊN TUNDEVELOPED (KHÔNG LÀM HỎNG PLIST) ==================
+        let processedXml = null;
+        let processedFileName = 'tundeveloped.mobileconfig';
 
         document.getElementById('signFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
-            signedFileName = file.name.replace('.mobileconfig', '_signed.mobileconfig');
+            processedFileName = file.name.replace('.mobileconfig', '_tundeveloped.mobileconfig');
             const reader = new FileReader();
             reader.onload = function(ev) {
                 document.getElementById('signXmlInput').value = ev.target.result;
@@ -428,55 +428,59 @@
             reader.readAsText(file);
         });
 
-        async function signUploadedFile() {
+        function attachTunDeveloped() {
             const xml = document.getElementById('signXmlInput').value.trim();
             if (!xml) {
                 alert('Vui lòng tải file hoặc dán nội dung XML!');
                 return;
             }
-            // Ký (mô phỏng bằng HMAC-SHA256 vì trình duyệt không có chứng chỉ thật)
-            const encoder = new TextEncoder();
-            const data = encoder.encode(xml);
-            const hmacKey = await crypto.subtle.generateKey({ name: 'HMAC', hash: 'SHA-256' }, true, ['sign']);
-            const sigBuffer = await crypto.subtle.sign('HMAC', hmacKey, data);
-            const sigBase64 = btoa(String.fromCharCode(...new Uint8Array(sigBuffer)));
 
-            // Chèn chữ ký vào XML
-            const signedXml = xml.replace('</plist>',
-                `
-            <key>PayloadSigner</key>
+            try {
+                // Đảm bảo XML có thẻ đóng plist và dict
+                let newXml = xml;
+                // Tìm vị trí </dict> cuối cùng trước </plist> để chèn thêm key
+                const dictCloseIndex = xml.lastIndexOf('</dict>');
+                const plistCloseIndex = xml.lastIndexOf('</plist>');
+
+                if (dictCloseIndex === -1 || plistCloseIndex === -1) {
+                    throw new Error('Không tìm thấy cấu trúc plist hợp lệ');
+                }
+
+                // Chuỗi sẽ chèn vào (các key hợp lệ của Apple)
+                const tunDevelopedInfo = `
+            <key>PayloadOrganization</key>
             <string>TunDeveloped</string>
-            <key>PayloadSignature</key>
-            <data>${sigBase64}</data>
-            <key>SignatureAlgorithm</key>
-            <string>HMAC-SHA256 (TunDeveloped)</string>
-        </plist>`);
-
-            signedXmlContent = signedXml;
-            document.getElementById('btnDownloadSigned').disabled = false;
-            document.getElementById('signatureDisplay').classList.remove('hidden');
-            document.getElementById('signatureDetails').innerHTML = `
-                <p>📌 Người ký: <strong>TunDeveloped</strong></p>
-                <p>🔐 Thuật toán: HMAC-SHA256</p>
-                <p style="word-break:break-all;">📜 Chữ ký: ${sigBase64.substring(0, 80)}…</p>
+            <key>PayloadDisplayName</key>
+            <string>TunDeveloped Configuration</string>
+            <key>PayloadDescription</key>
+            <string>Được tạo bởi TunDeveloped – Ký gửi: TunDeveloped</string>
             `;
-            logSign('✅ Đã ký thành công bởi TunDeveloped!');
+
+                // Chèn trước </dict> cuối cùng
+                newXml = xml.substring(0, dictCloseIndex) + tunDevelopedInfo + xml.substring(dictCloseIndex);
+
+                processedXml = newXml;
+                document.getElementById('btnDownloadSigned').disabled = false;
+                document.getElementById('signatureDisplay').classList.remove('hidden');
+                document.getElementById('signatureDetails').innerHTML = `
+                    <p>📌 Nhà phát hành: <strong>TunDeveloped</strong></p>
+                    <p>✅ File đã được gắn thông tin, sẵn sàng tải về và cài đặt.</p>
+                    <p style="color:#ffaa00;">⚠ Lưu ý: File không có chữ ký số trả phí, thiết bị sẽ hiện "Chưa ký" khi cài.</p>
+                `;
+            } catch (e) {
+                alert('Lỗi xử lý XML: ' + e.message);
+            }
         }
 
         function downloadSignedFile() {
-            if (!signedXmlContent) return;
-            const blob = new Blob([signedXmlContent], { type: 'application/x-apple-aspen-config' });
+            if (!processedXml) return;
+            const blob = new Blob([processedXml], { type: 'application/x-apple-aspen-config' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = signedFileName;
+            a.download = processedFileName;
             a.click();
             URL.revokeObjectURL(url);
-        }
-
-        function logSign(msg) {
-            const el = document.getElementById('signatureDetails');
-            el.innerHTML += `<br>${msg}`;
         }
 
         // ================== MÃ HÓA 10 LỚP ==================
@@ -513,7 +517,6 @@
                 }
             }
 
-            // Mỗi lớp là một hàm biến đổi dữ liệu
             async layer1(data, enc) {
                 const k = this.keys[0].slice(0, 32);
                 const iv = this.keys[0].slice(0, 12);
@@ -523,27 +526,17 @@
                     new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, ck, data));
             }
             layer2(data, enc) { return this._xorStream(data, this.keys[1], 2); }
-
             layer3(data, enc) { return this._tripleDes(data, this.keys[2], enc); }
-
             layer4(data, enc) { return this._rsaSim(data, this.keys[3], enc); }
-
             layer5(data, enc) { return this._vigenere(data, this.keys[4], enc); }
-
             layer6(data, enc) { return this._xorStream(data, this.keys[5], 6); }
-
             layer7(data, enc) { return this._caesarPlus(data, this.keys[6], enc); }
-
             layer8(data, enc) { return this._substitution(data, this.keys[7], enc); }
-
             layer9(data, enc) { return this._transpose(data, this.keys[8], enc); }
-
             layer10(data, enc) {
-                return enc ? btoa(String.fromCharCode(...data)) : new Uint8Array(atob(data).split('').map(c => c.charCodeAt(
-                    0)));
+                return enc ? btoa(String.fromCharCode(...data)) : new Uint8Array(atob(data).split('').map(c => c.charCodeAt(0)));
             }
 
-            // Các hàm phụ trợ
             _xorStream(data, key, id) {
                 const out = new Uint8Array(data);
                 for (let i = 0; i < data.length; i++) out[i] ^= key[i % key.length] ^ ((i * 73 + id) & 0xFF);
@@ -559,11 +552,8 @@
                         nr[i] = enc ? (r[i] + k + pass * 37 + i) & 0xFF : (r[i] - k - pass * 37 - i) & 0xFF;
                     }
                     if (r.length > 1) {
-                        if (enc) { const l = nr[r.length - 1];
-                            nr.copyWithin(1, 0);
-                            nr[0] = l; } else { const f = nr[0];
-                            nr.copyWithin(0, 1);
-                            nr[r.length - 1] = f; }
+                        if (enc) { const l = nr[r.length - 1]; nr.copyWithin(1, 0); nr[0] = l; }
+                        else { const f = nr[0]; nr.copyWithin(0, 1); nr[r.length - 1] = f; }
                     }
                     r = nr;
                 }
@@ -581,8 +571,7 @@
             _modInv(a, m) { a = ((a % m) + m) % m; for (let x = 1; x < m; x++) if ((a * x) % m === 1) return x; return 1; }
             _vigenere(data, key, enc) {
                 const out = new Uint8Array(data);
-                for (let i = 0; i < data.length; i++) out[i] = enc ? (data[i] + key[i % key.length]) & 0xFF : (data[i] - key[
-                    i % key.length]) & 0xFF;
+                for (let i = 0; i < data.length; i++) out[i] = enc ? (data[i] + key[i % key.length]) & 0xFF : (data[i] - key[i % key.length]) & 0xFF;
                 return out;
             }
             _caesarPlus(data, key, enc) {
@@ -594,8 +583,7 @@
                 return out;
             }
             _substitution(data, key, enc) {
-                const sbox = new Uint8Array(256),
-                    inv = new Uint8Array(256);
+                const sbox = new Uint8Array(256), inv = new Uint8Array(256);
                 for (let i = 0; i < 256; i++) {
                     sbox[i] = (i + key[i % key.length] + (i * 7) % 256) & 0xFF;
                     inv[sbox[i]] = i;
@@ -654,9 +642,7 @@
             if (status === 'done') el.classList.add('done');
             if (num === 10 && status === 'done') el.classList.add('final');
         }
-        function setProgress(percent) {
-            document.getElementById('encProgress').style.width = percent + '%';
-        }
+        function setProgress(percent) { document.getElementById('encProgress').style.width = percent + '%'; }
 
         async function startEncryption() {
             const pw = document.getElementById('encPassword').value;
@@ -674,9 +660,6 @@
             await encryptor.deriveKeys();
             consoleEl.textContent += '\n✅ Đã tạo 10 khóa. Bắt đầu mã hóa...';
             setProgress(10);
-
-            const encoder = new TextEncoder();
-            const inputBytes = encoder.encode(dataStr);
             const layers = ['AES-256','ChaCha20','3DES','RSA-OAEP','Vigenère','XOR','Caesar+','Substitution','Transpose','Base64'];
             for (let i = 1; i <= 10; i++) {
                 updateLayerUI(i, 'active');
@@ -685,8 +668,7 @@
                 updateLayerUI(i, 'done');
                 setProgress(10 + i * 8);
             }
-
-            const encrypted = await encryptor.encryptFull(inputBytes);
+            const encrypted = await encryptor.encryptFull(new TextEncoder().encode(dataStr));
             document.getElementById('encOutput').value = encrypted;
             consoleEl.textContent += `\n✅ Hoàn thành! Kết quả Base64 (${encrypted.length} ký tự).`;
             setProgress(100);
@@ -707,19 +689,12 @@
             await encryptor.deriveKeys();
             try {
                 const decBytes = await encryptor.decryptFull(b64Input);
-                const decStr = new TextDecoder().decode(decBytes);
-                document.getElementById('encDataInput').value = decStr;
+                document.getElementById('encDataInput').value = new TextDecoder().decode(decBytes);
                 consoleEl.textContent += '\n🔓 Giải mã thành công! Dữ liệu gốc đã hiển thị ở ô nhập.';
             } catch (e) {
                 consoleEl.textContent += '\n❌ Giải mã thất bại! Kiểm tra mật khẩu hoặc dữ liệu.';
             }
         }
-
-        // Đặt lại console khi chuyển tab
-        document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-            if (t.id === 'tabEncrypt') document.getElementById('encConsole').textContent =
-                '[TunDeveloped] Sẵn sàng mã hóa 10 lớp.';
-        }));
     </script>
 </body>
 </html>
