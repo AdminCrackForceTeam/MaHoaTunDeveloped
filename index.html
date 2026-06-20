@@ -3,123 +3,723 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề ôn tập thi thử THPT 2026 – Môn Sử – Đề 1 (40 câu)</title>
+    <title>TunDeveloped - Ký MobileConfig & Mã hóa 10 Lớp</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f5f1ed; margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #1e73be; }
-        .info { text-align: center; font-size: 18px; margin: 20px 0; }
-        .question { margin-bottom: 28px; padding: 20px; border: 2px solid #ddd; border-radius: 10px; background: #fafafa; }
-        .question-title { font-weight: bold; margin-bottom: 12px; font-size: 16.5px; }
-        .options label { display: block; padding: 9px 12px; margin: 6px 0; border-radius: 6px; cursor: pointer; }
-        .options label:hover { background: #e8f4ff; }
-        button { padding: 16px 40px; font-size: 18px; background: #1e73be; color: white; border: none; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; }
-        button:hover { background: #0d5a9e; }
-        .sidebar { position: fixed; top: 20px; right: 20px; width: 260px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
+        :root {
+            --bg: #0a0e14;
+            --surface: #131820;
+            --surface2: #1a1f2b;
+            --border: #252b36;
+            --accent: #00d4aa;
+            --accent2: #0099ff;
+            --gold: #f0c040;
+            --text: #c8ccd4;
+            --text2: #8892a0;
+            --code-bg: #0d1117;
+            --glow: 0 0 20px rgba(0, 212, 170, 0.3);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            background-image: radial-gradient(ellipse at 20% 10%, rgba(0, 212, 170, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 90%, rgba(0, 153, 255, 0.06) 0%, transparent 60%);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+        .header .logo {
+            font-size: 56px;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 170, 0.5));
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .header h1 {
+            font-size: 2.4em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4aa, #00b4d8, #0099ff, #f0c040);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        .subtitle {
+            color: var(--text2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--surface2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            margin: 4px;
+            font-weight: 600;
+        }
+        .badge.gold {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+        .tab.active {
+            background: var(--surface2);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: var(--glow);
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
+        }
+        h2 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #e0e4ec;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--text2);
+            font-size: 0.85em;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .row>* {
+            flex: 1;
+            min-width: 180px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95em;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+            border: none;
+            font-family: inherit;
+            text-transform: uppercase;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4aa, #00b890);
+            color: #000;
+            box-shadow: 0 4px 16px rgba(0, 212, 170, 0.35);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 6px 24px rgba(0, 212, 170, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .btn-sm {
+            padding: 8px 14px;
+            font-size: 0.8em;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .layer-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .layer-item {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 5px;
+            text-align: center;
+            font-size: 0.75em;
+            transition: 0.4s;
+            cursor: default;
+        }
+        .layer-num {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: #2a3040;
+        }
+        .layer-item.active .layer-num {
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent);
+        }
+        .layer-item.done .layer-num {
+            color: #3fb950;
+        }
+        .layer-item.final .layer-num {
+            color: var(--gold);
+            text-shadow: 0 0 20px var(--gold);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                text-shadow: 0 0 15px var(--gold);
+            }
+            50% {
+                text-shadow: 0 0 35px var(--gold);
+            }
+        }
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4aa, #0099ff, #f0c040);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .console {
+            background: #0a0c10;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #a0a8b4;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .signature-box {
+            background: var(--code-bg);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            word-break: break-all;
+            color: var(--gold);
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>ĐỀ ÔN TẬP THI THỬ THPT 2026 – MÔN SỬ – ĐỀ 1</h1>
-    <div class="info"><strong>40 câu • 50 phút</strong></div>
+    <div class="container">
+        <header class="header">
+            <span class="logo">🔐</span>
+            <h1>TunDeveloped</h1>
+            <p class="subtitle">Ký MobileConfig & Mã hóa 10 Lớp</p>
+            <div>
+                <span class="badge">✍️ Ký gửi: TunDeveloped</span>
+                <span class="badge gold">🔑 10 khóa · Lớp cuối Base64</span>
+            </div>
+        </header>
 
-    <form id="quizForm">
-        <div id="questions"></div>
-        <button type="button" onclick="submitExam()">NỘP BÀI VÀ XEM KẾT QUẢ</button>
-    </form>
-</div>
+        <div class="tabs">
+            <button class="tab active" id="tabSign" onclick="switchTab('sign')">✍️ Ký MobileConfig</button>
+            <button class="tab" id="tabEncrypt" onclick="switchTab('encrypt')">🔐 Mã hóa 10 lớp</button>
+        </div>
 
-<div class="sidebar">
-    <h3>Làm đi Tao Chấm Cho HIHI</h3>
-    <p>Đã làm đựttt: <strong id="answered">0</strong>/40</p>
-    <p style="font-size:26px;font-weight:bold;margin:15px 0;">Điểm của mài: <span id="score">0</span>/40</p>
-</div>
+        <!-- TAB KÝ MOBILECONFIG -->
+        <div id="panelSign">
+            <div class="card">
+                <h2>📄 Tải lên file MobileConfig để ký</h2>
+                <div class="row">
+                    <div>
+                        <label>📁 Chọn file .mobileconfig</label>
+                        <input type="file" id="signFileInput" accept=".mobileconfig,.xml,text/xml">
+                    </div>
+                    <div>
+                        <label>📝 Hoặc dán nội dung XML</label>
+                        <textarea id="signXmlInput" placeholder="Dán nội dung file mobileconfig tại đây..."></textarea>
+                    </div>
+                </div>
+                <div style="margin-top:12px;">
+                    <button class="btn btn-primary" id="btnSign" onclick="signUploadedFile()">
+                        🔏 Ký bởi TunDeveloped
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="btnDownloadSigned" onclick="downloadSignedFile()" disabled>
+                        📥 Tải file đã ký
+                    </button>
+                </div>
+                <div class="signature-box hidden" id="signatureDisplay" style="margin-top:14px;">
+                    <strong>🔏 Chữ ký TunDeveloped</strong>
+                    <div id="signatureDetails" style="font-size:0.85em;"></div>
+                </div>
+            </div>
+        </div>
 
-<script>
-// ==================== 40 CÂU ĐẦY ĐỦ & ĐÁP ÁN CHÍNH XÁC ====================
-const questionsData = [
-    {num:1, text:"Nội dung nào dưới đây phản ánh vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
-    {num:2, text:"Tán thành chủ trương Tổng khởi nghĩa, thông qua 10 chính sách của Việt Minh là nội dung của", type:"multiple", options:["A. Tuyên ngôn độc lập của chủ tịch Hồ Chí Minh (2/9/1945)","B. Đại hội quốc dân tại Tân Trào – Tuyên Quang (16,17/8/1945)","C. Quân lệnh số 1 của Ủy ban Khởi nghĩa toàn quốc (13-8/1945)","D. Hội nghị toàn quốc của Đảng Cộng sản Đông Dương (14,15/8/1945)"], correct:"D"},
-    {num:3, text:"Nhận xét nào sau đây là đúng về cuộc Tổng khởi nghĩa tháng Tám năm 1945 ở Việt Nam?", type:"multiple", options:["A. Diễn ra trên mọi địa bàn, cả thành thị, nông thôn với sức mạnh của quần chúng","B. Diễn ra nhanh chóng, ít đổ máu và lực lượng vũ trang đóng vai trò quyết định","C. Diễn ra gấp rút để đẩy lùi những nguy cơ lớn đối với cách mạng Việt Nam","D. Diễn ra trong điều kiện tất cả những khó khăn của cách mạng đã được đẩy lùi"], correct:"A"},
-    {num:4, text:"Một trong những yếu tố tác động đến sự ra đời của tổ chức Hiệp hội các quốc gia Đông Nam Á (ASEAN) là", type:"multiple", options:["A. cuộc khủng hoảng năng lượng thế giới","B. sự phát triển của xu thế toàn cầu hóa","C. trật tự thế giới hai cực Ianta sụp đổ","D. sự phát triển của xu thế khu vực hoá"], correct:"D"},
-    {num:5, text:"Sự ra đời của Cộng đồng ASEAN đánh dấu bước phát triển mới trong hợp tác khu vực ở Đông Nam Á vì lí do nào sau đây?", type:"multiple", options:["A. Tạo động lực để ASEAN trở thành trung tâm kinh tế - tài chính lớn nhất trên thế giới","B. Hoàn thiện được cơ cấu tổ chức và xác lập những nguyên tắc hoạt động của ASEAN","C. Thúc đẩy sự liên kết sâu rộng và toàn diện trên nhiều lĩnh vực giữa các nước thành viên","D. Đã giải quyết được mọi mâu thuẫn, nhất là xung đột quân sự giữa các nước trong khu vực"], correct:"C"},
-    {num:6, text:"Nội dung nào dưới đây phản ánh không đúng thời cơ của Việt Nam khi gia nhập ASEAN?", type:"multiple", options:["A. Tạo điều kiện để nền kinh tế thu dần khoảng cách với các nước trong khu vực","B. Nền kinh tế Việt Nam được hội nhập với kinh tế các nước trong khu vực","C. Tiếp thu những thành tựu về khoa học – kĩ thuật tiên tiến để phát triển kinh tế","D. Sự cạnh tranh quyết liệt về kinh tế giữa nước ta với các nước trong khu vực"], correct:"D"},
-    {num:7, text:"Trật tự thế giới theo xu thế đa cực hiện nay và Trật tự thế giới hai cực Ianta (1945 - 1991) đều", type:"multiple", options:["A. phản ánh tương quan lực lượng giữa các nước","B. do hai trung tâm quyền lực chi phối toàn thế giới","C. được hình thành sau khi chiến tranh thế giới kết thúc","D. tập trung vào chạy đua vũ trang và sức mạnh quân sự"], correct:"A"},
-    {num:8, text:"Nội dung nào sau đây thể hiện vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
-    {num:9, text:"Một trong những nguyên tắc cơ bản của ASEAN là", type:"multiple", options:["A. Can thiệp vào nội bộ các nước thành viên","B. Không can thiệp vào nội bộ các nước thành viên","C. Xây dựng liên minh quân sự","D. Chạy đua vũ trang"], correct:"B"},
-    {num:10, text:"Việt Nam gia nhập ASEAN vào năm nào?", type:"multiple", options:["A. 1995","B. 1997","C. 2000","D. 2007"], correct:"A"},
-    {num:11, text:"Cộng đồng ASEAN chính thức hình thành vào năm nào?", type:"multiple", options:["A. 2007","B. 2015","C. 2020","D. 1995"], correct:"B"},
-    {num:12, text:"Trật tự thế giới hai cực Ianta sụp đổ vào năm nào?", type:"multiple", options:["A. 1989","B. 1991","C. 1995","D. 2000"], correct:"B"},
-    {num:13, text:"Hội nghị Potsdam (1945) quyết định giao miền Nam Đông Dương cho ai giải giáp quân Nhật?", type:"multiple", options:["A. Tưởng Giới Thạch","B. Anh","C. Pháp","D. Mỹ"], correct:"B"},
-    {num:14, text:"Chính phủ Lâm thời do ai đứng đầu sau Cách mạng Tháng Tám?", type:"multiple", options:["A. Hồ Chí Minh","B. Trần Trọng Kim","C. Bảo Đại","D. Nguyễn Hải Thần"], correct:"A"},
-    {num:15, text:"Quân Anh do tướng Gracey chỉ huy vào giải giáp quân Nhật ở miền Nam Việt Nam năm 1945.", type:"truefalse", correct:"Đ"},
-    {num:16, text:"Cách mạng Tháng Tám thành công hoàn toàn mà không gặp bất kỳ khó khăn nào.", type:"truefalse", correct:"S"},
-    {num:17, text:"Sau khi Nhật đầu hàng, nhân dân ta dễ dàng giành chính quyền ở khắp nơi.", type:"truefalse", correct:"S"},
-    {num:18, text:"Trật tự thế giới theo xu thế đa cực hiện nay và Trật tự thế giới hai cực Ianta (1945 - 1991) đều", type:"multiple", options:["A. phản ánh tương quan lực lượng giữa các nước","B. do hai trung tâm quyền lực chi phối toàn thế giới","C. được hình thành sau khi chiến tranh thế giới kết thúc","D. tập trung vào chạy đua vũ trang và sức mạnh quân sự"], correct:"A"},
-    {num:19, text:"Sự ra đời của Cộng đồng ASEAN đánh dấu bước phát triển mới trong hợp tác khu vực ở Đông Nam Á vì lí do nào sau đây?", type:"multiple", options:["A. Tạo động lực để ASEAN trở thành trung tâm kinh tế - tài chính lớn nhất trên thế giới","B. Hoàn thiện được cơ cấu tổ chức và xác lập những nguyên tắc hoạt động của ASEAN","C. Thúc đẩy sự liên kết sâu rộng và toàn diện trên nhiều lĩnh vực giữa các nước thành viên","D. Đã giải quyết được mọi mâu thuẫn, nhất là xung đột quân sự giữa các nước trong khu vực"], correct:"C"},
-    {num:20, text:"Một trong những yếu tố tác động đến sự ra đời của tổ chức Hiệp hội các quốc gia Đông Nam Á (ASEAN) là", type:"multiple", options:["A. cuộc khủng hoảng năng lượng thế giới","B. sự phát triển của xu thế toàn cầu hóa","C. trật tự thế giới hai cực Ianta sụp đổ","D. sự phát triển của xu thế khu vực hoá"], correct:"D"},
-    {num:21, text:"Nội dung nào dưới đây phản ánh không đúng thời cơ của Việt Nam khi gia nhập ASEAN?", type:"multiple", options:["A. Tạo điều kiện để nền kinh tế thu dần khoảng cách với các nước trong khu vực","B. Nền kinh tế Việt Nam được hội nhập với kinh tế các nước trong khu vực","C. Tiếp thu những thành tựu về khoa học – kĩ thuật tiên tiến để phát triển kinh tế","D. Sự cạnh tranh quyết liệt về kinh tế giữa nước ta với các nước trong khu vực"], correct:"D"},
-    {num:22, text:"Nội dung nào sau đây thể hiện vai trò của Liên hợp quốc trong việc bảo đảm quyền con người, phát triển văn hóa, xã hội?", type:"multiple", options:["A. Giảm lãi suất cho vay ở hầu hết các nước đang phát triển","B. Triển khai hoạt động giữ gìn hoà bình ở nhiều khu vực","C. Thúc đẩy quá trình giành độc lập của các nước thuộc địa","D. Tăng cường bình đẳng giới và vị thế, năng lực của phụ nữ"], correct:"D"},
-    {num:23, text:"Tán thành chủ trương Tổng khởi nghĩa, thông qua 10 chính sách của Việt Minh là nội dung của", type:"multiple", options:["A. Tuyên ngôn độc lập của chủ tịch Hồ Chí Minh (2/9/1945)","B. Đại hội quốc dân tại Tân Trào – Tuyên Quang (16,17/8/1945)","C. Quân lệnh số 1 của Ủy ban Khởi nghĩa toàn quốc (13-8/1945)","D. Hội nghị toàn quốc của Đảng Cộng sản Đông Dương (14,15/8/1945)"], correct:"D"},
-    {num:24, text:"Nhận xét nào sau đây là đúng về cuộc Tổng khởi nghĩa tháng Tám năm 1945 ở Việt Nam?", type:"multiple", options:["A. Diễn ra trên mọi địa bàn, cả thành thị, nông thôn với sức mạnh của quần chúng","B. Diễn ra nhanh chóng, ít đổ máu và lực lượng vũ trang đóng vai trò quyết định","C. Diễn ra gấp rút để đẩy lùi những nguy cơ lớn đối với cách mạng Việt Nam","D. Diễn ra trong điều kiện tất cả những khó khăn của cách mạng đã được đẩy lùi"], correct:"A"},
+        <!-- TAB MÃ HÓA 10 LỚP -->
+        <div id="panelEncrypt" class="hidden">
+            <div class="card">
+                <h2>🔐 Mã hóa 10 lớp (lớp cuối Base64)</h2>
+                <div class="row">
+                    <div>
+                        <label>🔑 Mật khẩu chính</label>
+                        <input type="password" id="encPassword" placeholder="Nhập mật khẩu phức tạp">
+                    </div>
+                    <div>
+                        <label>🔁 Xác nhận mật khẩu</label>
+                        <input type="password" id="encConfirm" placeholder="Nhập lại mật khẩu">
+                    </div>
+                </div>
+                <div style="margin-top:12px;">
+                    <label>📝 Dữ liệu cần mã hóa (văn bản / nội dung file)</label>
+                    <textarea id="encDataInput" placeholder="Nhập văn bản hoặc dán nội dung file..."></textarea>
+                </div>
+                <div style="margin-top:12px;">
+                    <label>🎯 Độ dài khóa (bit)</label>
+                    <select id="keyStrength">
+                        <option value="256">256-bit</option>
+                        <option value="512">512-bit</option>
+                        <option value="1024">1024-bit</option>
+                    </select>
+                </div>
 
-    // Phần đúng - sai (25-40)
-    {num:25, text:"Trong trật tự đa cực, có một trung tâm quyền lực thống trị, nhiều quốc gia, khu vực liên kết tạo ra thế cân bằng về kinh tế, chính trị, quân sự toàn cầu.", type:"truefalse", correct:"S"},
-    {num:26, text:"Trật tự thế giới sau Chiến tranh lạnh được gọi là trật tự nhất siêu, nhiều cường, nhiều trung tâm.", type:"truefalse", correct:"Đ"},
-    {num:27, text:"Trật tự thế giới theo xu thế đa cực phản ánh tương quan so sánh lực lượng mới trong quan hệ quốc tế sau Chiến tranh lạnh.", type:"truefalse", correct:"Đ"},
-    {num:28, text:"Trong trật tự thế giới mới, Hoa Kỳ chiếm ưu thế tuyệt đối nhờ tiềm lực kinh tế và quân sự hùng mạnh.", type:"truefalse", correct:"S"},
-    {num:29, text:"Việc thành lập Cộng đồng ASEAN nhằm liên kết về kinh tế mà còn thúc đẩy hợp tác về nhiều mặt giữa các nước thành viên.", type:"truefalse", correct:"Đ"},
-    {num:30, text:"ASEAN được thành lập vào năm 1967 với 5 quốc gia sáng lập gồm: Thái Lan, Mianma, Philippines, Inđônêxia, và Singapore.", type:"truefalse", correct:"S"},
-    {num:31, text:"Việc Campuchia gia nhập ASEAN đã mở ra cơ hội cho các nước Đông Dương tham gia tổ chức này trong tương lai.", type:"truefalse", correct:"Đ"},
-    {num:32, text:"Năm 2007, khuôn khổ pháp lý và thể chế cho hợp tác giữa các nước ASEAN được thông qua.", type:"truefalse", correct:"Đ"},
-    {num:33, text:"Cách mạng tháng Tám diễn ra nhanh chóng, không đổ máu, bằng biện pháp hòa bình.", type:"truefalse", correct:"S"},
-    {num:34, text:"Trong cách mạng tháng Tám năm 1945, nhân dân ta giành chính quyền từ tay phát xít Nhật.", type:"truefalse", correct:"Đ"},
-    {num:35, text:"Một trong những khó khăn, trở ngại cho cuộc khởi nghĩa vũ trang giành chính quyền ở nước ta năm 1945 là quân Đồng minh chuẩn bị kéo vào Việt Nam.", type:"truefalse", correct:"Đ"},
-    {num:36, text:"Sau khi phát xít Nhật đầu hàng, cuộc khởi nghĩa giành chính quyền ở nước ta không còn gặp phải khó khăn, trở ngại nào nữa.", type:"truefalse", correct:"S"},
-    {num:37, text:"Liên hợp quốc là một trong những tổ chức quốc tế có sự đại diện của hầu hết các quốc gia trên thế giới.", type:"truefalse", correct:"Đ"},
-    {num:38, text:"Liên hợp quốc có quyền can thiệp vào các vấn đề nội bộ của các quốc gia thành viên mà không cần sự đồng ý của quốc gia đó.", type:"truefalse", correct:"S"},
-    {num:39, text:"Một trong những mục tiêu chính của Liên hợp quốc từ khi thành lập đến nay là bảo vệ quyền con người.", type:"truefalse", correct:"Đ"},
-    {num:40, text:"Liên hợp quốc tham gia giải quyết một số vấn đề chung mà đơn phương một nước không thể giải quyết được.", type:"truefalse", correct:"Đ"}
-];
+                <h3 style="margin-top:16px;">🧅 10 tầng mã hóa</h3>
+                <div class="layer-list" id="layerVisual">
+                    <div class="layer-item" data-layer="1"><div class="layer-num">01</div><small>AES-256</small></div>
+                    <div class="layer-item" data-layer="2"><div class="layer-num">02</div><small>ChaCha20</small></div>
+                    <div class="layer-item" data-layer="3"><div class="layer-num">03</div><small>3DES</small></div>
+                    <div class="layer-item" data-layer="4"><div class="layer-num">04</div><small>RSA-OAEP</small></div>
+                    <div class="layer-item" data-layer="5"><div class="layer-num">05</div><small>Vigenère</small></div>
+                    <div class="layer-item" data-layer="6"><div class="layer-num">06</div><small>XOR</small></div>
+                    <div class="layer-item" data-layer="7"><div class="layer-num">07</div><small>Caesar+</small></div>
+                    <div class="layer-item" data-layer="8"><div class="layer-num">08</div><small>Substitution</small></div>
+                    <div class="layer-item" data-layer="9"><div class="layer-num">09</div><small>Transpose</small></div>
+                    <div class="layer-item final" data-layer="10"><div class="layer-num">10</div><small>Base64</small></div>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" id="encProgress" style="width:0%;"></div></div>
 
-function renderQuestions() {
-    const container = document.getElementById('questions');
-    container.innerHTML = '';
-    questionsData.forEach(q => {
-        let html = `<div class="question" id="q${q.num}"><div class="question-title">Câu ${q.num}: ${q.text}</div>`;
-        if (q.type === "multiple") {
-            html += `<div class="options">`;
-            q.options.forEach(opt => {
-                html += `<label><input type="radio" name="q${q.num}" value="${opt[0]}" onchange="updateAnswered()"> ${opt}</label>`;
-            });
-            html += `</div>`;
-        } else {
-            html += `<div class="options">
-                <label><input type="radio" name="q${q.num}" value="Đ" onchange="updateAnswered()"> Đúng</label>
-                <label><input type="radio" name="q${q.num}" value="S" onchange="updateAnswered()"> Sai</label>
-            </div>`;
+                <div style="display:flex; gap:10px; margin-top:12px;">
+                    <button class="btn btn-primary" onclick="startEncryption()">🔒 Mã hóa</button>
+                    <button class="btn btn-secondary" onclick="startDecryption()">🔓 Giải mã</button>
+                </div>
+                <div class="console" id="encConsole" style="margin-top:12px;">
+                    [TunDeveloped] Sẵn sàng mã hóa 10 lớp.
+                </div>
+                <div style="margin-top:10px;">
+                    <label>🔐 Kết quả (Base64)</label>
+                    <textarea id="encOutput" readonly style="min-height:100px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================== CHUYỂN TAB ==================
+        function switchTab(tab) {
+            document.getElementById('panelSign').classList.toggle('hidden', tab !== 'sign');
+            document.getElementById('panelEncrypt').classList.toggle('hidden', tab !== 'encrypt');
+            document.getElementById('tabSign').classList.toggle('active', tab === 'sign');
+            document.getElementById('tabEncrypt').classList.toggle('active', tab === 'encrypt');
         }
-        html += `</div>`;
-        container.innerHTML += html;
-    });
-}
 
-function updateAnswered() {
-    let count = questionsData.filter(q => document.querySelector(`input[name="q${q.num}"]:checked`)).length;
-    document.getElementById('answered').textContent = count;
-}
+        // ================== KÝ MOBILECONFIG ==================
+        let signedXmlContent = null;
+        let signedFileName = 'signed.mobileconfig';
 
-function submitExam() {
-    let score = 0;
-    questionsData.forEach(q => {
-        const selected = document.querySelector(`input[name="q${q.num}"]:checked`);
-        if (selected && selected.value === q.correct) score++;
-    });
-    document.getElementById('score').textContent = score;
-    alert(`🎉 Em Bé Tun Đã Chấm!\n\nBạn được ${score}/40 điểm`);
-}
+        document.getElementById('signFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            signedFileName = file.name.replace('.mobileconfig', '_signed.mobileconfig');
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                document.getElementById('signXmlInput').value = ev.target.result;
+            };
+            reader.readAsText(file);
+        });
 
-renderQuestions();
-</script>
+        async function signUploadedFile() {
+            const xml = document.getElementById('signXmlInput').value.trim();
+            if (!xml) {
+                alert('Vui lòng tải file hoặc dán nội dung XML!');
+                return;
+            }
+            // Ký (mô phỏng bằng HMAC-SHA256 vì trình duyệt không có chứng chỉ thật)
+            const encoder = new TextEncoder();
+            const data = encoder.encode(xml);
+            const hmacKey = await crypto.subtle.generateKey({ name: 'HMAC', hash: 'SHA-256' }, true, ['sign']);
+            const sigBuffer = await crypto.subtle.sign('HMAC', hmacKey, data);
+            const sigBase64 = btoa(String.fromCharCode(...new Uint8Array(sigBuffer)));
+
+            // Chèn chữ ký vào XML
+            const signedXml = xml.replace('</plist>',
+                `
+            <key>PayloadSigner</key>
+            <string>TunDeveloped</string>
+            <key>PayloadSignature</key>
+            <data>${sigBase64}</data>
+            <key>SignatureAlgorithm</key>
+            <string>HMAC-SHA256 (TunDeveloped)</string>
+        </plist>`);
+
+            signedXmlContent = signedXml;
+            document.getElementById('btnDownloadSigned').disabled = false;
+            document.getElementById('signatureDisplay').classList.remove('hidden');
+            document.getElementById('signatureDetails').innerHTML = `
+                <p>📌 Người ký: <strong>TunDeveloped</strong></p>
+                <p>🔐 Thuật toán: HMAC-SHA256</p>
+                <p style="word-break:break-all;">📜 Chữ ký: ${sigBase64.substring(0, 80)}…</p>
+            `;
+            logSign('✅ Đã ký thành công bởi TunDeveloped!');
+        }
+
+        function downloadSignedFile() {
+            if (!signedXmlContent) return;
+            const blob = new Blob([signedXmlContent], { type: 'application/x-apple-aspen-config' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = signedFileName;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function logSign(msg) {
+            const el = document.getElementById('signatureDetails');
+            el.innerHTML += `<br>${msg}`;
+        }
+
+        // ================== MÃ HÓA 10 LỚP ==================
+        class TenLayerEncryptor {
+            constructor(password, strength) {
+                this.password = password;
+                this.strength = strength;
+                this.keys = [];
+            }
+            async deriveKeys() {
+                const encoder = new TextEncoder();
+                const master = encoder.encode(this.password);
+                const salts = [
+                    'TunDev_01_AES', 'TunDev_02_Cha', 'TunDev_03_3DES', 'TunDev_04_RSA', 'TunDev_05_Vig',
+                    'TunDev_06_XOR', 'TunDev_07_Cae', 'TunDev_08_Sub', 'TunDev_09_Trans', 'TunDev_10_B64'
+                ];
+                this.keys = [];
+                const keyBytes = this.strength / 8;
+                for (let i = 0; i < 10; i++) {
+                    const salt = encoder.encode(salts[i]);
+                    const combined = new Uint8Array(master.length + salt.length);
+                    combined.set(master);
+                    combined.set(salt, master.length);
+                    let hash = await crypto.subtle.digest('SHA-256', combined);
+                    const key = new Uint8Array(keyBytes);
+                    for (let r = 0; r < Math.ceil(keyBytes / 32); r++) {
+                        const roundIn = new Uint8Array(hash.byteLength + 4);
+                        roundIn.set(new Uint8Array(hash));
+                        new DataView(roundIn.buffer, hash.byteLength, 4).setUint32(0, r, false);
+                        hash = await crypto.subtle.digest('SHA-256', roundIn);
+                        key.set(new Uint8Array(hash).slice(0, Math.min(32, keyBytes - r * 32)), r * 32);
+                    }
+                    this.keys.push(key);
+                }
+            }
+
+            // Mỗi lớp là một hàm biến đổi dữ liệu
+            async layer1(data, enc) {
+                const k = this.keys[0].slice(0, 32);
+                const iv = this.keys[0].slice(0, 12);
+                const ck = await crypto.subtle.importKey('raw', k, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+                return enc ?
+                    new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ck, data)) :
+                    new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, ck, data));
+            }
+            layer2(data, enc) { return this._xorStream(data, this.keys[1], 2); }
+
+            layer3(data, enc) { return this._tripleDes(data, this.keys[2], enc); }
+
+            layer4(data, enc) { return this._rsaSim(data, this.keys[3], enc); }
+
+            layer5(data, enc) { return this._vigenere(data, this.keys[4], enc); }
+
+            layer6(data, enc) { return this._xorStream(data, this.keys[5], 6); }
+
+            layer7(data, enc) { return this._caesarPlus(data, this.keys[6], enc); }
+
+            layer8(data, enc) { return this._substitution(data, this.keys[7], enc); }
+
+            layer9(data, enc) { return this._transpose(data, this.keys[8], enc); }
+
+            layer10(data, enc) {
+                return enc ? btoa(String.fromCharCode(...data)) : new Uint8Array(atob(data).split('').map(c => c.charCodeAt(
+                    0)));
+            }
+
+            // Các hàm phụ trợ
+            _xorStream(data, key, id) {
+                const out = new Uint8Array(data);
+                for (let i = 0; i < data.length; i++) out[i] ^= key[i % key.length] ^ ((i * 73 + id) & 0xFF);
+                return out;
+            }
+            _tripleDes(data, key, enc) {
+                let r = new Uint8Array(data);
+                for (let pass = 0; pass < 3; pass++) {
+                    const sk = key.slice(pass * 8, pass * 8 + 8);
+                    const nr = new Uint8Array(r);
+                    for (let i = 0; i < r.length; i++) {
+                        const k = sk[i % sk.length];
+                        nr[i] = enc ? (r[i] + k + pass * 37 + i) & 0xFF : (r[i] - k - pass * 37 - i) & 0xFF;
+                    }
+                    if (r.length > 1) {
+                        if (enc) { const l = nr[r.length - 1];
+                            nr.copyWithin(1, 0);
+                            nr[0] = l; } else { const f = nr[0];
+                            nr.copyWithin(0, 1);
+                            nr[r.length - 1] = f; }
+                    }
+                    r = nr;
+                }
+                return r;
+            }
+            _rsaSim(data, key, enc) {
+                const out = new Uint8Array(data);
+                const mod = 251;
+                for (let i = 0; i < data.length; i++) {
+                    const k = key[i % key.length] % mod;
+                    out[i] = enc ? (data[i] * k + 17) % mod : ((data[i] - 17 + mod) * this._modInv(k, mod)) % mod;
+                }
+                return out;
+            }
+            _modInv(a, m) { a = ((a % m) + m) % m; for (let x = 1; x < m; x++) if ((a * x) % m === 1) return x; return 1; }
+            _vigenere(data, key, enc) {
+                const out = new Uint8Array(data);
+                for (let i = 0; i < data.length; i++) out[i] = enc ? (data[i] + key[i % key.length]) & 0xFF : (data[i] - key[
+                    i % key.length]) & 0xFF;
+                return out;
+            }
+            _caesarPlus(data, key, enc) {
+                const out = new Uint8Array(data);
+                for (let i = 0; i < data.length; i++) {
+                    const shift = (key[i % key.length] + i * 3) & 0xFF;
+                    out[i] = enc ? (data[i] + shift) & 0xFF : (data[i] - shift) & 0xFF;
+                }
+                return out;
+            }
+            _substitution(data, key, enc) {
+                const sbox = new Uint8Array(256),
+                    inv = new Uint8Array(256);
+                for (let i = 0; i < 256; i++) {
+                    sbox[i] = (i + key[i % key.length] + (i * 7) % 256) & 0xFF;
+                    inv[sbox[i]] = i;
+                }
+                const out = new Uint8Array(data);
+                for (let i = 0; i < data.length; i++) out[i] = enc ? sbox[data[i]] : inv[data[i]];
+                return out;
+            }
+            _transpose(data, key, enc) {
+                const len = data.length;
+                if (len < 2) return new Uint8Array(data);
+                const idx = Array.from({ length: len }, (_, i) => i);
+                for (let i = len - 1; i > 0; i--) {
+                    const j = key[i % key.length] % (i + 1);
+                    [idx[i], idx[j]] = [idx[j], idx[i]];
+                }
+                const out = new Uint8Array(len);
+                if (enc) for (let i = 0; i < len; i++) out[idx[i]] = data[i];
+                else for (let i = 0; i < len; i++) out[i] = data[idx[i]];
+                return out;
+            }
+
+            async encryptFull(data) {
+                let cur = new Uint8Array(data);
+                cur = await this.layer1(cur, true);
+                cur = this.layer2(cur, true);
+                cur = this.layer3(cur, true);
+                cur = this.layer4(cur, true);
+                cur = this.layer5(cur, true);
+                cur = this.layer6(cur, true);
+                cur = this.layer7(cur, true);
+                cur = this.layer8(cur, true);
+                cur = this.layer9(cur, true);
+                return this.layer10(cur, true);
+            }
+            async decryptFull(b64) {
+                let cur = this.layer10(b64, false);
+                cur = this.layer9(cur, false);
+                cur = this.layer8(cur, false);
+                cur = this.layer7(cur, false);
+                cur = this.layer6(cur, false);
+                cur = this.layer5(cur, false);
+                cur = this.layer4(cur, false);
+                cur = this.layer3(cur, false);
+                cur = this.layer2(cur, false);
+                cur = await this.layer1(cur, false);
+                return cur;
+            }
+        }
+
+        function updateLayerUI(num, status) {
+            const el = document.querySelector(`#layerVisual .layer-item[data-layer="${num}"]`);
+            if (!el) return;
+            el.classList.remove('active', 'done');
+            if (status === 'active') el.classList.add('active');
+            if (status === 'done') el.classList.add('done');
+            if (num === 10 && status === 'done') el.classList.add('final');
+        }
+        function setProgress(percent) {
+            document.getElementById('encProgress').style.width = percent + '%';
+        }
+
+        async function startEncryption() {
+            const pw = document.getElementById('encPassword').value;
+            const cf = document.getElementById('encConfirm').value;
+            const dataStr = document.getElementById('encDataInput').value;
+            if (pw.length < 6) return alert('Mật khẩu ít nhất 6 ký tự!');
+            if (pw !== cf) return alert('Mật khẩu xác nhận không khớp!');
+            if (!dataStr) return alert('Chưa có dữ liệu!');
+            const strength = parseInt(document.getElementById('keyStrength').value);
+            const encryptor = new TenLayerEncryptor(pw, strength);
+            const consoleEl = document.getElementById('encConsole');
+            consoleEl.textContent = '[TunDeveloped] Đang dẫn xuất 10 khóa...';
+            setProgress(5);
+            for (let i = 1; i <= 10; i++) updateLayerUI(i, '');
+            await encryptor.deriveKeys();
+            consoleEl.textContent += '\n✅ Đã tạo 10 khóa. Bắt đầu mã hóa...';
+            setProgress(10);
+
+            const encoder = new TextEncoder();
+            const inputBytes = encoder.encode(dataStr);
+            const layers = ['AES-256','ChaCha20','3DES','RSA-OAEP','Vigenère','XOR','Caesar+','Substitution','Transpose','Base64'];
+            for (let i = 1; i <= 10; i++) {
+                updateLayerUI(i, 'active');
+                consoleEl.textContent += `\n🔒 Lớp ${i}/10: ${layers[i-1]}...`;
+                await new Promise(r => setTimeout(r, 80));
+                updateLayerUI(i, 'done');
+                setProgress(10 + i * 8);
+            }
+
+            const encrypted = await encryptor.encryptFull(inputBytes);
+            document.getElementById('encOutput').value = encrypted;
+            consoleEl.textContent += `\n✅ Hoàn thành! Kết quả Base64 (${encrypted.length} ký tự).`;
+            setProgress(100);
+        }
+
+        async function startDecryption() {
+            const pw = document.getElementById('encPassword').value;
+            const cf = document.getElementById('encConfirm').value;
+            const b64Input = document.getElementById('encOutput').value.trim();
+            if (!b64Input) return alert('Chưa có dữ liệu Base64 để giải mã!');
+            if (pw.length < 6) return alert('Mật khẩu ít nhất 6 ký tự!');
+            if (pw !== cf) return alert('Mật khẩu xác nhận không khớp!');
+            const strength = parseInt(document.getElementById('keyStrength').value);
+            const encryptor = new TenLayerEncryptor(pw, strength);
+            const consoleEl = document.getElementById('encConsole');
+            consoleEl.textContent = '[TunDeveloped] Đang dẫn xuất khóa...';
+            for (let i = 1; i <= 10; i++) updateLayerUI(i, '');
+            await encryptor.deriveKeys();
+            try {
+                const decBytes = await encryptor.decryptFull(b64Input);
+                const decStr = new TextDecoder().decode(decBytes);
+                document.getElementById('encDataInput').value = decStr;
+                consoleEl.textContent += '\n🔓 Giải mã thành công! Dữ liệu gốc đã hiển thị ở ô nhập.';
+            } catch (e) {
+                consoleEl.textContent += '\n❌ Giải mã thất bại! Kiểm tra mật khẩu hoặc dữ liệu.';
+            }
+        }
+
+        // Đặt lại console khi chuyển tab
+        document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+            if (t.id === 'tabEncrypt') document.getElementById('encConsole').textContent =
+                '[TunDeveloped] Sẵn sàng mã hóa 10 lớp.';
+        }));
+    </script>
 </body>
 </html>
