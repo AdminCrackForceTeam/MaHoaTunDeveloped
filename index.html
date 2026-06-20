@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TunDeveloped - Ký MobileConfig & Mã hóa 10 Lớp</title>
+    <title>TunDeveloped - Ký MobileConfig & Mã hóa 50 Lớp Siêu Bảo Mật</title>
     <style>
         :root {
             --bg: #0a0e14;
@@ -34,7 +34,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         .header {
@@ -218,46 +218,49 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
-        .layer-list {
+        .layer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 8px;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
             margin: 12px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 4px;
         }
         .layer-item {
             background: var(--code-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 10px 5px;
+            border-radius: 8px;
+            padding: 8px 4px;
             text-align: center;
-            font-size: 0.75em;
-            transition: 0.4s;
-            cursor: default;
+            font-size: 0.7em;
+            transition: 0.3s;
         }
         .layer-num {
-            font-size: 1.8em;
+            font-size: 1.4em;
             font-weight: 900;
             color: #2a3040;
+            line-height: 1;
         }
         .layer-item.active .layer-num {
             color: var(--accent);
-            text-shadow: 0 0 15px var(--accent);
+            text-shadow: 0 0 10px var(--accent);
         }
         .layer-item.done .layer-num {
             color: #3fb950;
         }
         .layer-item.final .layer-num {
             color: var(--gold);
-            text-shadow: 0 0 20px var(--gold);
-            animation: pulse 1.5s infinite;
+            text-shadow: 0 0 12px var(--gold);
+            animation: pulse 1.2s infinite;
         }
         @keyframes pulse {
             0%,
             100% {
-                text-shadow: 0 0 15px var(--gold);
+                text-shadow: 0 0 8px var(--gold);
             }
             50% {
-                text-shadow: 0 0 35px var(--gold);
+                text-shadow: 0 0 25px var(--gold);
             }
         }
         .progress-bar {
@@ -271,7 +274,7 @@
             height: 100%;
             background: linear-gradient(90deg, #00d4aa, #0099ff, #f0c040);
             border-radius: 10px;
-            transition: width 0.5s ease;
+            transition: width 0.3s ease;
         }
         .console {
             background: #0a0c10;
@@ -304,18 +307,18 @@
 <body>
     <div class="container">
         <header class="header">
-            <span class="logo">🔐</span>
+            <span class="logo">🌍</span>
             <h1>TunDeveloped</h1>
-            <p class="subtitle">Ký MobileConfig & Mã hóa 10 Lớp</p>
+            <p class="subtitle">Ký MobileConfig & Mã hóa 50 Lớp Siêu Bảo Mật</p>
             <div>
                 <span class="badge">✍️ Ký gửi: TunDeveloped</span>
-                <span class="badge gold">🔑 10 khóa · Lớp cuối Base64</span>
+                <span class="badge gold">🔑 50 khóa · Lớp cuối Base64</span>
             </div>
         </header>
 
         <div class="tabs">
             <button class="tab active" id="tabSign" onclick="switchTab('sign')">✍️ Ký MobileConfig</button>
-            <button class="tab" id="tabEncrypt" onclick="switchTab('encrypt')">🔐 Mã hóa 10 lớp</button>
+            <button class="tab" id="tabEncrypt" onclick="switchTab('encrypt')">🔐 Mã hóa 50 lớp</button>
         </div>
 
         <!-- TAB KÝ MOBILECONFIG -->
@@ -333,7 +336,7 @@
                     </div>
                 </div>
                 <div style="margin-top:12px;">
-                    <button class="btn btn-primary" id="btnSign" onclick="attachTunDeveloped()">
+                    <button class="btn btn-primary" onclick="attachTunDeveloped()">
                         ✍️ Gắn thông tin TunDeveloped
                     </button>
                     <button class="btn btn-secondary btn-sm" id="btnDownloadSigned" onclick="downloadSignedFile()" disabled>
@@ -341,20 +344,20 @@
                     </button>
                 </div>
                 <div class="signature-box hidden" id="signatureDisplay" style="margin-top:14px;">
-                    <strong>✅ File hợp lệ – sẵn sàng tải về</strong>
+                    <strong>✅ File đã sẵn sàng – sẽ hiển thị "Từ: TunDeveloped" khi cài</strong>
                     <div id="signatureDetails" style="font-size:0.85em;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB MÃ HÓA 10 LỚP -->
+        <!-- TAB MÃ HÓA 50 LỚP SIÊU BẢO MẬT -->
         <div id="panelEncrypt" class="hidden">
             <div class="card">
-                <h2>🔐 Mã hóa 10 lớp (lớp cuối Base64)</h2>
+                <h2>🔐 Mã hóa 50 lớp – Siêu bảo mật (không thể phá nếu thiếu mật khẩu)</h2>
                 <div class="row">
                     <div>
                         <label>🔑 Mật khẩu chính</label>
-                        <input type="password" id="encPassword" placeholder="Nhập mật khẩu phức tạp">
+                        <input type="password" id="encPassword" placeholder="Nhập mật khẩu cực mạnh...">
                     </div>
                     <div>
                         <label>🔁 Xác nhận mật khẩu</label>
@@ -362,42 +365,31 @@
                     </div>
                 </div>
                 <div style="margin-top:12px;">
-                    <label>📝 Dữ liệu cần mã hóa (văn bản / nội dung file)</label>
+                    <label>📝 Dữ liệu cần mã hóa</label>
                     <textarea id="encDataInput" placeholder="Nhập văn bản hoặc dán nội dung file..."></textarea>
                 </div>
                 <div style="margin-top:12px;">
-                    <label>🎯 Độ dài khóa (bit)</label>
+                    <label>🎯 Độ dài khóa</label>
                     <select id="keyStrength">
                         <option value="256">256-bit</option>
-                        <option value="512">512-bit</option>
+                        <option value="512" selected>512-bit (Khuyên dùng)</option>
                         <option value="1024">1024-bit</option>
                     </select>
                 </div>
 
-                <h3 style="margin-top:16px;">🧅 10 tầng mã hóa</h3>
-                <div class="layer-list" id="layerVisual">
-                    <div class="layer-item" data-layer="1"><div class="layer-num">01</div><small>AES-256</small></div>
-                    <div class="layer-item" data-layer="2"><div class="layer-num">02</div><small>ChaCha20</small></div>
-                    <div class="layer-item" data-layer="3"><div class="layer-num">03</div><small>3DES</small></div>
-                    <div class="layer-item" data-layer="4"><div class="layer-num">04</div><small>RSA-OAEP</small></div>
-                    <div class="layer-item" data-layer="5"><div class="layer-num">05</div><small>Vigenère</small></div>
-                    <div class="layer-item" data-layer="6"><div class="layer-num">06</div><small>XOR</small></div>
-                    <div class="layer-item" data-layer="7"><div class="layer-num">07</div><small>Caesar+</small></div>
-                    <div class="layer-item" data-layer="8"><div class="layer-num">08</div><small>Substitution</small></div>
-                    <div class="layer-item" data-layer="9"><div class="layer-num">09</div><small>Transpose</small></div>
-                    <div class="layer-item final" data-layer="10"><div class="layer-num">10</div><small>Base64</small></div>
-                </div>
+                <h3 style="margin-top:16px;">🧅 50 tầng mã hóa</h3>
+                <div class="layer-grid" id="layerGrid"></div>
                 <div class="progress-bar"><div class="progress-fill" id="encProgress" style="width:0%;"></div></div>
 
                 <div style="display:flex; gap:10px; margin-top:12px;">
-                    <button class="btn btn-primary" onclick="startEncryption()">🔒 Mã hóa</button>
+                    <button class="btn btn-primary" onclick="startEncryption()">🔒 Mã hóa 50 lớp</button>
                     <button class="btn btn-secondary" onclick="startDecryption()">🔓 Giải mã</button>
                 </div>
                 <div class="console" id="encConsole" style="margin-top:12px;">
-                    [TunDeveloped] Sẵn sàng mã hóa 10 lớp.
+                    [TunDeveloped] Sẵn sàng mã hóa 50 lớp siêu bảo mật.
                 </div>
                 <div style="margin-top:10px;">
-                    <label>🔐 Kết quả (Base64)</label>
+                    <label>🔐 Kết quả (Base64 – đã bao gồm muối ngẫu nhiên)</label>
                     <textarea id="encOutput" readonly style="min-height:100px;"></textarea>
                 </div>
             </div>
@@ -405,6 +397,17 @@
     </div>
 
     <script>
+        const TOTAL_LAYERS = 50;
+        // Khởi tạo giao diện 50 lớp
+        const layerGrid = document.getElementById('layerGrid');
+        for (let i = 1; i <= TOTAL_LAYERS; i++) {
+            const div = document.createElement('div');
+            div.className = 'layer-item';
+            div.dataset.layer = i;
+            div.innerHTML = `<div class="layer-num">${String(i).padStart(2,'0')}</div><small>Lớp ${i}</small>`;
+            layerGrid.appendChild(div);
+        }
+
         // ================== CHUYỂN TAB ==================
         function switchTab(tab) {
             document.getElementById('panelSign').classList.toggle('hidden', tab !== 'sign');
@@ -413,7 +416,7 @@
             document.getElementById('tabEncrypt').classList.toggle('active', tab === 'encrypt');
         }
 
-        // ================== GẮN TÊN TUNDEVELOPED (KHÔNG LÀM HỎNG PLIST) ==================
+        // ================== KÝ MOBILECONFIG (GIỮ NGUYÊN) ==================
         let processedXml = null;
         let processedFileName = 'tundeveloped.mobileconfig';
 
@@ -422,54 +425,45 @@
             if (!file) return;
             processedFileName = file.name.replace('.mobileconfig', '_tundeveloped.mobileconfig');
             const reader = new FileReader();
-            reader.onload = function(ev) {
-                document.getElementById('signXmlInput').value = ev.target.result;
-            };
+            reader.onload = function(ev) { document.getElementById('signXmlInput').value = ev.target.result; };
             reader.readAsText(file);
         });
 
         function attachTunDeveloped() {
             const xml = document.getElementById('signXmlInput').value.trim();
-            if (!xml) {
-                alert('Vui lòng tải file hoặc dán nội dung XML!');
-                return;
-            }
-
+            if (!xml) { alert('Vui lòng tải file hoặc dán nội dung XML!'); return; }
             try {
-                // Đảm bảo XML có thẻ đóng plist và dict
-                let newXml = xml;
-                // Tìm vị trí </dict> cuối cùng trước </plist> để chèn thêm key
-                const dictCloseIndex = xml.lastIndexOf('</dict>');
-                const plistCloseIndex = xml.lastIndexOf('</plist>');
-
-                if (dictCloseIndex === -1 || plistCloseIndex === -1) {
-                    throw new Error('Không tìm thấy cấu trúc plist hợp lệ');
+                const plistMatch = xml.match(/<plist[^>]*>[\s\S]*?<dict>/i);
+                if (!plistMatch) throw new Error('Không tìm thấy thẻ <plist><dict>');
+                const dictStartIndex = plistMatch.index + plistMatch[0].length;
+                let depth = 1;
+                let dictEndIndex;
+                const regex = /<\/dict>|<dict[^>]*>/gi;
+                regex.lastIndex = dictStartIndex;
+                while (depth > 0) {
+                    const match = regex.exec(xml);
+                    if (!match) throw new Error('XML không hợp lệ');
+                    if (match[0].startsWith('</dict')) depth--;
+                    else depth++;
+                    if (depth === 0) dictEndIndex = regex.lastIndex;
                 }
-
-                // Chuỗi sẽ chèn vào (các key hợp lệ của Apple)
-                const tunDevelopedInfo = `
+                const tunInfo = `
             <key>PayloadOrganization</key>
             <string>TunDeveloped</string>
             <key>PayloadDisplayName</key>
             <string>TunDeveloped Configuration</string>
             <key>PayloadDescription</key>
-            <string>Được tạo bởi TunDeveloped – Ký gửi: TunDeveloped</string>
+            <string>Được tạo bởi TunDeveloped</string>
             `;
-
-                // Chèn trước </dict> cuối cùng
-                newXml = xml.substring(0, dictCloseIndex) + tunDevelopedInfo + xml.substring(dictCloseIndex);
-
-                processedXml = newXml;
+                processedXml = xml.substring(0, dictEndIndex - '</dict>'.length) + tunInfo + xml.substring(dictEndIndex - '</dict>'.length);
                 document.getElementById('btnDownloadSigned').disabled = false;
                 document.getElementById('signatureDisplay').classList.remove('hidden');
                 document.getElementById('signatureDetails').innerHTML = `
-                    <p>📌 Nhà phát hành: <strong>TunDeveloped</strong></p>
-                    <p>✅ File đã được gắn thông tin, sẵn sàng tải về và cài đặt.</p>
-                    <p style="color:#ffaa00;">⚠ Lưu ý: File không có chữ ký số trả phí, thiết bị sẽ hiện "Chưa ký" khi cài.</p>
+                    <p>📌 Tổ chức: <strong>TunDeveloped</strong> (sẽ hiện dòng "Từ: TunDeveloped")</p>
+                    <p>✅ File hợp lệ, có thể cài đặt.</p>
+                    <p style="color:#ffaa00;">⚠ Lưu ý: File không có chữ ký số, thiết bị sẽ ghi "Chưa ký".</p>
                 `;
-            } catch (e) {
-                alert('Lỗi xử lý XML: ' + e.message);
-            }
+            } catch (e) { alert('Lỗi xử lý XML: ' + e.message); }
         }
 
         function downloadSignedFile() {
@@ -483,195 +477,327 @@
             URL.revokeObjectURL(url);
         }
 
-        // ================== MÃ HÓA 10 LỚP ==================
-        class TenLayerEncryptor {
-            constructor(password, strength) {
+        // ================== MÃ HÓA 50 LỚP SIÊU BẢO MẬT ==================
+        class SuperEncryptor {
+            constructor(password, strength, salt = null) {
                 this.password = password;
                 this.strength = strength;
+                this.salt = salt || crypto.getRandomValues(new Uint8Array(32)); // 256-bit salt
                 this.keys = [];
+                this.pbkdf2Iterations = 500000; // Cực kỳ chậm để chống brute-force
             }
-            async deriveKeys() {
+
+            async deriveAllKeys() {
                 const encoder = new TextEncoder();
                 const master = encoder.encode(this.password);
-                const salts = [
-                    'TunDev_01_AES', 'TunDev_02_Cha', 'TunDev_03_3DES', 'TunDev_04_RSA', 'TunDev_05_Vig',
-                    'TunDev_06_XOR', 'TunDev_07_Cae', 'TunDev_08_Sub', 'TunDev_09_Trans', 'TunDev_10_B64'
-                ];
-                this.keys = [];
                 const keyBytes = this.strength / 8;
-                for (let i = 0; i < 10; i++) {
-                    const salt = encoder.encode(salts[i]);
-                    const combined = new Uint8Array(master.length + salt.length);
-                    combined.set(master);
-                    combined.set(salt, master.length);
-                    let hash = await crypto.subtle.digest('SHA-256', combined);
-                    const key = new Uint8Array(keyBytes);
-                    for (let r = 0; r < Math.ceil(keyBytes / 32); r++) {
-                        const roundIn = new Uint8Array(hash.byteLength + 4);
-                        roundIn.set(new Uint8Array(hash));
-                        new DataView(roundIn.buffer, hash.byteLength, 4).setUint32(0, r, false);
-                        hash = await crypto.subtle.digest('SHA-256', roundIn);
-                        key.set(new Uint8Array(hash).slice(0, Math.min(32, keyBytes - r * 32)), r * 32);
-                    }
-                    this.keys.push(key);
+                this.keys = [];
+
+                for (let i = 0; i < TOTAL_LAYERS; i++) {
+                    // Muối riêng cho từng lớp, kết hợp với salt chính
+                    const layerSalt = new Uint8Array([...this.salt, ...encoder.encode(`_layer${i}`)]);
+                    // Mô phỏng PBKDF2: nhiều vòng lặp HMAC-SHA256
+                    let derived = await this._pbkdf2(master, layerSalt, this.pbkdf2Iterations, keyBytes);
+                    this.keys.push(derived);
                 }
             }
 
-            async layer1(data, enc) {
-                const k = this.keys[0].slice(0, 32);
-                const iv = this.keys[0].slice(0, 12);
+            async _pbkdf2(password, salt, iterations, keyLength) {
+                // HMAC-SHA256 dùng Web Crypto
+                const hmacKey = await crypto.subtle.importKey('raw', password, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+                // Block = 1 (đơn giản hóa, đủ dùng)
+                const blockIndex = new Uint8Array([0, 0, 0, 1]);
+                const input = new Uint8Array([...salt, ...blockIndex]);
+                let u = new Uint8Array(await crypto.subtle.sign('HMAC', hmacKey, input));
+                let result = u;
+                for (let i = 1; i < iterations; i++) {
+                    u = new Uint8Array(await crypto.subtle.sign('HMAC', hmacKey, u));
+                    // XOR từng byte
+                    for (let j = 0; j < result.length; j++) {
+                        result[j] ^= u[j];
+                    }
+                }
+                // Cắt lấy keyLength bytes (thực tế SHA256 cho 32 bytes, nếu cần dài hơn thì lặp thêm block)
+                if (keyLength <= 32) return result.slice(0, keyLength);
+                // Mở rộng thêm nếu key > 256 bit
+                const fullKey = new Uint8Array(keyLength);
+                fullKey.set(result, 0);
+                let offset = 32;
+                let block = 2;
+                while (offset < keyLength) {
+                    const blockIdx = new Uint8Array([0, 0, 0, block]);
+                    const in2 = new Uint8Array([...salt, ...blockIdx]);
+                    let u2 = new Uint8Array(await crypto.subtle.sign('HMAC', hmacKey, in2));
+                    let res2 = u2;
+                    for (let i = 1; i < iterations; i++) {
+                        u2 = new Uint8Array(await crypto.subtle.sign('HMAC', hmacKey, u2));
+                        for (let j = 0; j < res2.length; j++) res2[j] ^= u2[j];
+                    }
+                    const copyLen = Math.min(32, keyLength - offset);
+                    fullKey.set(res2.slice(0, copyLen), offset);
+                    offset += copyLen;
+                    block++;
+                }
+                return fullKey;
+            }
+
+            // --- Các thuật toán mạnh ---
+            async layerAES(data, keyIndex, encrypt) {
+                const k = this.keys[keyIndex].slice(0, 32);
+                const iv = this.keys[keyIndex].slice(0, 12);
                 const ck = await crypto.subtle.importKey('raw', k, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
-                return enc ?
+                return encrypt ?
                     new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ck, data)) :
                     new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, ck, data));
             }
-            layer2(data, enc) { return this._xorStream(data, this.keys[1], 2); }
-            layer3(data, enc) { return this._tripleDes(data, this.keys[2], enc); }
-            layer4(data, enc) { return this._rsaSim(data, this.keys[3], enc); }
-            layer5(data, enc) { return this._vigenere(data, this.keys[4], enc); }
-            layer6(data, enc) { return this._xorStream(data, this.keys[5], 6); }
-            layer7(data, enc) { return this._caesarPlus(data, this.keys[6], enc); }
-            layer8(data, enc) { return this._substitution(data, this.keys[7], enc); }
-            layer9(data, enc) { return this._transpose(data, this.keys[8], enc); }
-            layer10(data, enc) {
-                return enc ? btoa(String.fromCharCode(...data)) : new Uint8Array(atob(data).split('').map(c => c.charCodeAt(0)));
+
+            _xorStream(data, key, seed) {
+                const out = new Uint8Array(data);
+                for (let i = 0; i < data.length; i++) {
+                    out[i] ^= key[i % key.length] ^ ((i * 73 + seed) & 0xFF);
+                }
+                return out;
             }
 
-            _xorStream(data, key, id) {
+            _chacha20_sim(data, key) {
+                // Mô phỏng ChaCha20 bằng keystream phức tạp
                 const out = new Uint8Array(data);
-                for (let i = 0; i < data.length; i++) out[i] ^= key[i % key.length] ^ ((i * 73 + id) & 0xFF);
-                return out;
-            }
-            _tripleDes(data, key, enc) {
-                let r = new Uint8Array(data);
-                for (let pass = 0; pass < 3; pass++) {
-                    const sk = key.slice(pass * 8, pass * 8 + 8);
-                    const nr = new Uint8Array(r);
-                    for (let i = 0; i < r.length; i++) {
-                        const k = sk[i % sk.length];
-                        nr[i] = enc ? (r[i] + k + pass * 37 + i) & 0xFF : (r[i] - k - pass * 37 - i) & 0xFF;
+                const state = new Uint32Array(16);
+                // Tạo state từ key
+                for (let i = 0; i < 8; i++) {
+                    state[i] = (key[i*4] | (key[i*4+1]<<8) | (key[i*4+2]<<16) | (key[i*4+3]<<24)) >>> 0;
+                }
+                // Constants "expand 32-byte k"
+                state[8] = 0x61707865; state[9] = 0x3320646e; state[10] = 0x79622d32; state[11] = 0x6b206574;
+                // Counter & nonce
+                let counter = 0;
+                for (let i = 0; i < data.length; i += 64) {
+                    const block = new Uint32Array(state);
+                    // 20 rounds (10 cột + 10 hàng)
+                    for (let r = 0; r < 10; r++) {
+                        // Quarter round on columns
+                        this._quarterRound(block, 0, 4, 8, 12);
+                        this._quarterRound(block, 1, 5, 9, 13);
+                        this._quarterRound(block, 2, 6, 10, 14);
+                        this._quarterRound(block, 3, 7, 11, 15);
+                        // Quarter round on diagonals
+                        this._quarterRound(block, 0, 5, 10, 15);
+                        this._quarterRound(block, 1, 6, 11, 12);
+                        this._quarterRound(block, 2, 7, 8, 13);
+                        this._quarterRound(block, 3, 4, 9, 14);
                     }
-                    if (r.length > 1) {
-                        if (enc) { const l = nr[r.length - 1]; nr.copyWithin(1, 0); nr[0] = l; }
-                        else { const f = nr[0]; nr.copyWithin(0, 1); nr[r.length - 1] = f; }
+                    // Thêm state gốc
+                    for (let j = 0; j < 16; j++) block[j] += state[j];
+                    // XOR keystream
+                    const keystream = new Uint8Array(block.buffer);
+                    for (let j = 0; j < 64 && (i+j) < data.length; j++) {
+                        out[i+j] ^= keystream[j];
                     }
-                    r = nr;
-                }
-                return r;
-            }
-            _rsaSim(data, key, enc) {
-                const out = new Uint8Array(data);
-                const mod = 251;
-                for (let i = 0; i < data.length; i++) {
-                    const k = key[i % key.length] % mod;
-                    out[i] = enc ? (data[i] * k + 17) % mod : ((data[i] - 17 + mod) * this._modInv(k, mod)) % mod;
+                    // Tăng counter
+                    state[12]++; if (state[12] === 0) state[13]++;
                 }
                 return out;
             }
-            _modInv(a, m) { a = ((a % m) + m) % m; for (let x = 1; x < m; x++) if ((a * x) % m === 1) return x; return 1; }
-            _vigenere(data, key, enc) {
-                const out = new Uint8Array(data);
-                for (let i = 0; i < data.length; i++) out[i] = enc ? (data[i] + key[i % key.length]) & 0xFF : (data[i] - key[i % key.length]) & 0xFF;
-                return out;
+            _quarterRound(state, a, b, c, d) {
+                state[a] += state[b]; state[d] ^= state[a]; state[d] = (state[d] << 16) | (state[d] >>> 16);
+                state[c] += state[d]; state[b] ^= state[c]; state[b] = (state[b] << 12) | (state[b] >>> 20);
+                state[a] += state[b]; state[d] ^= state[a]; state[d] = (state[d] << 8) | (state[d] >>> 24);
+                state[c] += state[d]; state[b] ^= state[c]; state[b] = (state[b] << 7) | (state[b] >>> 25);
             }
-            _caesarPlus(data, key, enc) {
-                const out = new Uint8Array(data);
-                for (let i = 0; i < data.length; i++) {
-                    const shift = (key[i % key.length] + i * 3) & 0xFF;
-                    out[i] = enc ? (data[i] + shift) & 0xFF : (data[i] - shift) & 0xFF;
-                }
-                return out;
-            }
-            _substitution(data, key, enc) {
-                const sbox = new Uint8Array(256), inv = new Uint8Array(256);
+
+            _dynamicSBox(data, key, encrypt) {
+                const sbox = new Uint8Array(256);
+                const inv = new Uint8Array(256);
+                // Tạo S-box từ key bằng thuật toán RC4-like
+                const k = key.slice(0, 256);
+                for (let i = 0; i < 256; i++) sbox[i] = i;
+                let j = 0;
                 for (let i = 0; i < 256; i++) {
-                    sbox[i] = (i + key[i % key.length] + (i * 7) % 256) & 0xFF;
-                    inv[sbox[i]] = i;
+                    j = (j + sbox[i] + k[i % k.length]) & 0xFF;
+                    [sbox[i], sbox[j]] = [sbox[j], sbox[i]];
                 }
+                // Tạo bảng nghịch đảo
+                for (let i = 0; i < 256; i++) inv[sbox[i]] = i;
                 const out = new Uint8Array(data);
-                for (let i = 0; i < data.length; i++) out[i] = enc ? sbox[data[i]] : inv[data[i]];
+                for (let i = 0; i < data.length; i++) {
+                    out[i] = encrypt ? sbox[data[i]] : inv[data[i]];
+                }
                 return out;
             }
-            _transpose(data, key, enc) {
+
+            _galoisMultiply(data, key, encrypt) {
+                const out = new Uint8Array(data);
+                const poly = 0x1b; // AES irreducible
+                for (let i = 0; i < data.length; i++) {
+                    let a = data[i];
+                    let b = key[i % key.length];
+                    if (!encrypt) {
+                        // Phép nhân nghịch đảo trong GF(2^8) đơn giản (tìm inverse)
+                        if (a === 0) { out[i] = 0; continue; }
+                        // Dùng bảng log/antilog đơn giản
+                        let inv = this._gfInverse(a, poly);
+                        out[i] = this._gfMul(inv, b, poly);
+                    } else {
+                        out[i] = this._gfMul(a, b, poly);
+                    }
+                }
+                return out;
+            }
+            _gfMul(a, b, poly) {
+                let p = 0;
+                for (let i = 0; i < 8; i++) {
+                    if (b & 1) p ^= a;
+                    let hi = a & 0x80;
+                    a <<= 1;
+                    if (hi) a ^= poly;
+                    b >>= 1;
+                }
+                return p & 0xFF;
+            }
+            _gfInverse(a, poly) {
+                if (a === 0) return 0;
+                for (let i = 1; i < 256; i++) {
+                    if (this._gfMul(a, i, poly) === 1) return i;
+                }
+                return 0;
+            }
+
+            _shuffleBytes(data, key, encrypt) {
                 const len = data.length;
                 if (len < 2) return new Uint8Array(data);
-                const idx = Array.from({ length: len }, (_, i) => i);
+                // Fisher-Yates với bộ sinh số từ key
+                const indices = Array.from({length: len}, (_, i) => i);
+                let keyIndex = 0;
                 for (let i = len - 1; i > 0; i--) {
-                    const j = key[i % key.length] % (i + 1);
-                    [idx[i], idx[j]] = [idx[j], idx[i]];
+                    const r = key[keyIndex % key.length] % (i + 1);
+                    [indices[i], indices[r]] = [indices[r], indices[i]];
+                    keyIndex++;
                 }
                 const out = new Uint8Array(len);
-                if (enc) for (let i = 0; i < len; i++) out[idx[i]] = data[i];
-                else for (let i = 0; i < len; i++) out[i] = data[idx[i]];
+                if (encrypt) {
+                    for (let i = 0; i < len; i++) out[indices[i]] = data[i];
+                } else {
+                    for (let i = 0; i < len; i++) out[i] = data[indices[i]];
+                }
                 return out;
             }
 
-            async encryptFull(data) {
-                let cur = new Uint8Array(data);
-                cur = await this.layer1(cur, true);
-                cur = this.layer2(cur, true);
-                cur = this.layer3(cur, true);
-                cur = this.layer4(cur, true);
-                cur = this.layer5(cur, true);
-                cur = this.layer6(cur, true);
-                cur = this.layer7(cur, true);
-                cur = this.layer8(cur, true);
-                cur = this.layer9(cur, true);
-                return this.layer10(cur, true);
+            // Hàm chính áp dụng 50 lớp
+            async encryptFull(inputBytes) {
+                let data = new Uint8Array(inputBytes);
+                for (let i = 0; i < TOTAL_LAYERS - 1; i++) {
+                    const key = this.keys[i];
+                    const type = i % 10; // 10 thuật toán khác nhau
+                    switch (type) {
+                        case 0: data = await this.layerAES(data, i, true); break;
+                        case 1: data = this._xorStream(data, key, i); break;
+                        case 2: data = this._chacha20_sim(data, key); break;
+                        case 3: data = this._dynamicSBox(data, key, true); break;
+                        case 4: data = this._galoisMultiply(data, key, true); break;
+                        case 5: data = this._shuffleBytes(data, key, true); break;
+                        case 6: data = this._xorStream(data, key, i+100); break; // XOR biến thể
+                        case 7: data = await this.layerAES(data, i, true); break; // AES lần 2
+                        case 8: data = this._chacha20_sim(data, key); break;
+                        case 9: data = this._dynamicSBox(data, key, true); break;
+                    }
+                }
+                // Lớp 50: Base64 (không phải mã hóa, chỉ encoding)
+                return btoa(String.fromCharCode(...data));
             }
-            async decryptFull(b64) {
-                let cur = this.layer10(b64, false);
-                cur = this.layer9(cur, false);
-                cur = this.layer8(cur, false);
-                cur = this.layer7(cur, false);
-                cur = this.layer6(cur, false);
-                cur = this.layer5(cur, false);
-                cur = this.layer4(cur, false);
-                cur = this.layer3(cur, false);
-                cur = this.layer2(cur, false);
-                cur = await this.layer1(cur, false);
-                return cur;
+
+            async decryptFull(b64String) {
+                let data = new Uint8Array(atob(b64String).split('').map(c => c.charCodeAt(0)));
+                for (let i = TOTAL_LAYERS - 2; i >= 0; i--) {
+                    const key = this.keys[i];
+                    const type = i % 10;
+                    switch (type) {
+                        case 0: data = await this.layerAES(data, i, false); break;
+                        case 1: data = this._xorStream(data, key, i); break; // XOR đối xứng
+                        case 2: data = this._chacha20_sim(data, key); break; // ChaCha20 đối xứng
+                        case 3: data = this._dynamicSBox(data, key, false); break;
+                        case 4: data = this._galoisMultiply(data, key, false); break;
+                        case 5: data = this._shuffleBytes(data, key, false); break;
+                        case 6: data = this._xorStream(data, key, i+100); break;
+                        case 7: data = await this.layerAES(data, i, false); break;
+                        case 8: data = this._chacha20_sim(data, key); break;
+                        case 9: data = this._dynamicSBox(data, key, false); break;
+                    }
+                }
+                return data;
             }
         }
 
         function updateLayerUI(num, status) {
-            const el = document.querySelector(`#layerVisual .layer-item[data-layer="${num}"]`);
+            const el = document.querySelector(`.layer-item[data-layer="${num}"]`);
             if (!el) return;
-            el.classList.remove('active', 'done');
+            el.classList.remove('active', 'done', 'final');
             if (status === 'active') el.classList.add('active');
-            if (status === 'done') el.classList.add('done');
-            if (num === 10 && status === 'done') el.classList.add('final');
+            else if (status === 'done') el.classList.add('done');
+            if (num === TOTAL_LAYERS && status === 'done') el.classList.add('final');
         }
-        function setProgress(percent) { document.getElementById('encProgress').style.width = percent + '%'; }
+        function setProgress(p) { document.getElementById('encProgress').style.width = p + '%'; }
 
         async function startEncryption() {
             const pw = document.getElementById('encPassword').value;
             const cf = document.getElementById('encConfirm').value;
             const dataStr = document.getElementById('encDataInput').value;
-            if (pw.length < 6) return alert('Mật khẩu ít nhất 6 ký tự!');
+            if (pw.length < 8) return alert('Mật khẩu ít nhất 8 ký tự để bảo mật tối đa!');
             if (pw !== cf) return alert('Mật khẩu xác nhận không khớp!');
             if (!dataStr) return alert('Chưa có dữ liệu!');
             const strength = parseInt(document.getElementById('keyStrength').value);
-            const encryptor = new TenLayerEncryptor(pw, strength);
             const consoleEl = document.getElementById('encConsole');
-            consoleEl.textContent = '[TunDeveloped] Đang dẫn xuất 10 khóa...';
+            consoleEl.textContent = '[TunDeveloped] Đang tạo muối ngẫu nhiên và dẫn xuất 50 khóa (500.000 vòng lặp mỗi khóa)...';
+            setProgress(2);
+            // Reset UI
+            for (let i = 1; i <= TOTAL_LAYERS; i++) updateLayerUI(i, '');
+
+            // Tạo muối ngẫu nhiên
+            const salt = crypto.getRandomValues(new Uint8Array(32));
+            const encryptor = new SuperEncryptor(pw, strength, salt);
+            const startTime = performance.now();
+            await encryptor.deriveAllKeys();
+            const deriveTime = ((performance.now() - startTime)/1000).toFixed(1);
+            consoleEl.textContent += `\n✅ Đã dẫn xuất 50 khóa (${deriveTime}s). Bắt đầu mã hóa...`;
             setProgress(5);
-            for (let i = 1; i <= 10; i++) updateLayerUI(i, '');
-            await encryptor.deriveKeys();
-            consoleEl.textContent += '\n✅ Đã tạo 10 khóa. Bắt đầu mã hóa...';
-            setProgress(10);
-            const layers = ['AES-256','ChaCha20','3DES','RSA-OAEP','Vigenère','XOR','Caesar+','Substitution','Transpose','Base64'];
-            for (let i = 1; i <= 10; i++) {
-                updateLayerUI(i, 'active');
-                consoleEl.textContent += `\n🔒 Lớp ${i}/10: ${layers[i-1]}...`;
-                await new Promise(r => setTimeout(r, 80));
-                updateLayerUI(i, 'done');
-                setProgress(10 + i * 8);
+
+            const encoder = new TextEncoder();
+            const inputBytes = encoder.encode(dataStr);
+            let data = new Uint8Array(inputBytes);
+            // Mã hóa 49 lớp đầu
+            for (let i = 0; i < TOTAL_LAYERS - 1; i++) {
+                updateLayerUI(i+1, 'active');
+                consoleEl.textContent = `[TunDeveloped] Lớp ${i+1}/${TOTAL_LAYERS}...`;
+                const type = i % 10;
+                // Gọi hàm tương ứng trực tiếp
+                const key = encryptor.keys[i];
+                switch (type) {
+                    case 0: data = await encryptor.layerAES(data, i, true); break;
+                    case 1: data = encryptor._xorStream(data, key, i); break;
+                    case 2: data = encryptor._chacha20_sim(data, key); break;
+                    case 3: data = encryptor._dynamicSBox(data, key, true); break;
+                    case 4: data = encryptor._galoisMultiply(data, key, true); break;
+                    case 5: data = encryptor._shuffleBytes(data, key, true); break;
+                    case 6: data = encryptor._xorStream(data, key, i+100); break;
+                    case 7: data = await encryptor.layerAES(data, i, true); break;
+                    case 8: data = encryptor._chacha20_sim(data, key); break;
+                    case 9: data = encryptor._dynamicSBox(data, key, true); break;
+                }
+                updateLayerUI(i+1, 'done');
+                setProgress(5 + Math.floor((i+1)/TOTAL_LAYERS * 80));
+                if (i % 3 === 0) await new Promise(r => setTimeout(r, 1)); // giữ UI responsive
             }
-            const encrypted = await encryptor.encryptFull(new TextEncoder().encode(dataStr));
-            document.getElementById('encOutput').value = encrypted;
-            consoleEl.textContent += `\n✅ Hoàn thành! Kết quả Base64 (${encrypted.length} ký tự).`;
+            // Lớp 50 Base64
+            updateLayerUI(TOTAL_LAYERS, 'active');
+            // Ghép muối + dữ liệu mã hóa rồi mới Base64
+            const withSalt = new Uint8Array(salt.length + data.length);
+            withSalt.set(salt);
+            withSalt.set(data, salt.length);
+            const encrypted = btoa(String.fromCharCode(...withSalt));
+            updateLayerUI(TOTAL_LAYERS, 'done');
             setProgress(100);
+            const totalTime = ((performance.now() - startTime)/1000).toFixed(1);
+            document.getElementById('encOutput').value = encrypted;
+            consoleEl.textContent = `[TunDeveloped] ✅ Mã hóa hoàn tất (${totalTime}s). Kết quả Base64 đã bao gồm muối. Không thể giải mã nếu sai mật khẩu.`;
         }
 
         async function startDecryption() {
@@ -679,20 +805,57 @@
             const cf = document.getElementById('encConfirm').value;
             const b64Input = document.getElementById('encOutput').value.trim();
             if (!b64Input) return alert('Chưa có dữ liệu Base64 để giải mã!');
-            if (pw.length < 6) return alert('Mật khẩu ít nhất 6 ký tự!');
+            if (pw.length < 8) return alert('Mật khẩu ít nhất 8 ký tự!');
             if (pw !== cf) return alert('Mật khẩu xác nhận không khớp!');
             const strength = parseInt(document.getElementById('keyStrength').value);
-            const encryptor = new TenLayerEncryptor(pw, strength);
             const consoleEl = document.getElementById('encConsole');
-            consoleEl.textContent = '[TunDeveloped] Đang dẫn xuất khóa...';
-            for (let i = 1; i <= 10; i++) updateLayerUI(i, '');
-            await encryptor.deriveKeys();
+            consoleEl.textContent = '[TunDeveloped] Đang tách muối và dẫn xuất khóa...';
+            setProgress(2);
+            // Reset UI
+            for (let i = 1; i <= TOTAL_LAYERS; i++) updateLayerUI(i, '');
+
             try {
-                const decBytes = await encryptor.decryptFull(b64Input);
-                document.getElementById('encDataInput').value = new TextDecoder().decode(decBytes);
-                consoleEl.textContent += '\n🔓 Giải mã thành công! Dữ liệu gốc đã hiển thị ở ô nhập.';
+                // Giải mã Base64 để lấy muối + dữ liệu
+                const raw = new Uint8Array(atob(b64Input).split('').map(c => c.charCodeAt(0)));
+                if (raw.length < 32) throw new Error('Dữ liệu không hợp lệ');
+                const salt = raw.slice(0, 32);
+                const cipherData = raw.slice(32);
+
+                const encryptor = new SuperEncryptor(pw, strength, salt);
+                await encryptor.deriveAllKeys();
+                consoleEl.textContent += '\n✅ Đã dẫn xuất khóa. Đang giải mã 50 lớp...';
+                setProgress(5);
+
+                let data = cipherData;
+                for (let i = TOTAL_LAYERS - 2; i >= 0; i--) {
+                    updateLayerUI(i+1, 'active');
+                    consoleEl.textContent = `[TunDeveloped] Giải mã lớp ${i+1}/${TOTAL_LAYERS}...`;
+                    const key = encryptor.keys[i];
+                    const type = i % 10;
+                    switch (type) {
+                        case 0: data = await encryptor.layerAES(data, i, false); break;
+                        case 1: data = encryptor._xorStream(data, key, i); break;
+                        case 2: data = encryptor._chacha20_sim(data, key); break;
+                        case 3: data = encryptor._dynamicSBox(data, key, false); break;
+                        case 4: data = encryptor._galoisMultiply(data, key, false); break;
+                        case 5: data = encryptor._shuffleBytes(data, key, false); break;
+                        case 6: data = encryptor._xorStream(data, key, i+100); break;
+                        case 7: data = await encryptor.layerAES(data, i, false); break;
+                        case 8: data = encryptor._chacha20_sim(data, key); break;
+                        case 9: data = encryptor._dynamicSBox(data, key, false); break;
+                    }
+                    updateLayerUI(i+1, 'done');
+                    setProgress(5 + Math.floor((49 - i)/49 * 90));
+                }
+                updateLayerUI(TOTAL_LAYERS, 'done');
+                setProgress(100);
+                const decStr = new TextDecoder().decode(data);
+                document.getElementById('encDataInput').value = decStr;
+                consoleEl.textContent = '[TunDeveloped] 🔓 Giải mã thành công! Dữ liệu gốc đã hiển thị.';
             } catch (e) {
-                consoleEl.textContent += '\n❌ Giải mã thất bại! Kiểm tra mật khẩu hoặc dữ liệu.';
+                consoleEl.textContent += '\n❌ Giải mã thất bại! Sai mật khẩu hoặc dữ liệu bị hỏng.';
+                setProgress(0);
+                console.error(e);
             }
         }
     </script>
